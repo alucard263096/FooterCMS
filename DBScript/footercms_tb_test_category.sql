@@ -18,20 +18,15 @@ USE `footercms`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tb_user`
+-- Table structure for table `tb_test_category`
 --
 
-DROP TABLE IF EXISTS `tb_user`;
+DROP TABLE IF EXISTS `tb_test_category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_user` (
+CREATE TABLE `tb_test_category` (
   `id` int(11) NOT NULL,
-  `login_id` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `user_name` varchar(50) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `is_admin` varchar(1) NOT NULL,
-  `remarks` varchar(350) NOT NULL,
+  `name` varchar(45) NOT NULL,
   `status` varchar(1) NOT NULL,
   `created_date` datetime NOT NULL,
   `created_user` int(11) NOT NULL,
@@ -42,13 +37,12 @@ CREATE TABLE `tb_user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tb_user`
+-- Dumping data for table `tb_test_category`
 --
 
-LOCK TABLES `tb_user` WRITE;
-/*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
-INSERT INTO `tb_user` VALUES (1,'admin','21232f297a57a5a743894a0e4a801fc3','Administrator','alucard263096@126.com','Y','please let me know if you have any problems in this CMS','A','2014-11-30 00:01:17',1,'2014-11-30 00:03:11',1);
-/*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
+LOCK TABLES `tb_test_category` WRITE;
+/*!40000 ALTER TABLE `tb_test_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_test_category` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -60,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-30  1:57:00
+-- Dump completed on 2014-11-30 16:57:49

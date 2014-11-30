@@ -18,31 +18,35 @@ USE `footercms`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tb_test_category`
+-- Table structure for table `tb_general`
 --
 
-DROP TABLE IF EXISTS `tb_test_category`;
+DROP TABLE IF EXISTS `tb_general`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_test_category` (
+CREATE TABLE `tb_general` (
   `id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `status` varchar(1) NOT NULL,
-  `created_date` datetime NOT NULL,
-  `created_user` int(11) NOT NULL,
-  `updated_date` datetime NOT NULL,
+  `key` varchar(100) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `position` varchar(255) NOT NULL,
+  `type` varchar(10) DEFAULT NULL,
+  `content` text,
   `updated_user` int(11) NOT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  `created_user` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tb_test_category`
+-- Dumping data for table `tb_general`
 --
 
-LOCK TABLES `tb_test_category` WRITE;
-/*!40000 ALTER TABLE `tb_test_category` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_test_category` ENABLE KEYS */;
+LOCK TABLES `tb_general` WRITE;
+/*!40000 ALTER TABLE `tb_general` DISABLE KEYS */;
+INSERT INTO `tb_general` VALUES (1,'contactus','Contact us','show this in contact us',NULL,'<p>my phone number is 123456</p>\n',1,'2014-11-30 14:42:46',1,'2014-11-30 14:42:46');
+/*!40000 ALTER TABLE `tb_general` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-30  1:57:00
+-- Dump completed on 2014-11-30 16:57:49
