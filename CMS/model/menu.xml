@@ -30,6 +30,39 @@
       </submenus>
     </mainmenu>
     <mainmenu>
+      <module>website</module>
+      <name>Website</name>
+      <submenus>
+        <submenu>
+          <id>base</id>
+          <name>Setting</name>
+          <url>/Website/base.php</url>
+          <onlyadmin>1</onlyadmin>
+        </submenu>
+        <submenu>
+          <id>banner_list</id>
+          <name>Banner List</name>
+          <url>/Website/banner.php</url>
+        </submenu>
+        <submenu>
+          <id>banner_add</id>
+          <name>Banner Add</name>
+          <url>/Website/banner.php?action=add</url>
+        </submenu>
+        <submenu>
+          <id>general_list</id>
+          <name>General Text List</name>
+          <url>/Website/general.php</url>
+        </submenu>
+        <submenu>
+          <id>general_add</id>
+          <name>General Text Add</name>
+          <url>/Website/general.php?action=add</url>
+          <onlyadmin>1</onlyadmin>
+        </submenu>
+      </submenus>
+    </mainmenu>
+    <mainmenu>
       <module>test</module>
       <name>Example</name>
       <submenus>

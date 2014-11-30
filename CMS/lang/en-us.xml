@@ -74,4 +74,7 @@
       <i>If you are an experienced developer, I think you can see the Xml and know what I do. Go ahead to contribute your idea to me in GitHub.</i>
     </welcome>
   </about>
+  <general>
+    <keyduplicate>Uni Key has been used</keyduplicate>
+  </general>
 </root>

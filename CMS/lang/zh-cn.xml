@@ -74,4 +74,7 @@
       <i>我相信，只要你是一个有经验的开发者，那么应该很容易明白我做的事情。请立刻点击右上角参与你的贡献吧。</i>
     </welcome>
   </about>
+  <general>
+    <keyduplicate>唯一键已经被使用</keyduplicate>
+  </general>
 </root>

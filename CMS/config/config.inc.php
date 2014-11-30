@@ -5,7 +5,7 @@ $CONFIG['rootpath']		= '/FooterCMS/CMS';
 //$CONFIG['charset']		= 'utf-8'; 
 $CONFIG['Title']             = 'FooterCMS';
 $CONFIG['URL']="http://localhost/FooterCMS/CMS";
-$CONFIG['lang']="zh-cn";
+$CONFIG['lang']="en-us";//zh-cn
 $CONFIG["frontendurl"]="http://localhost/FooterCMS/";
 $CONFIG["SessionName"]="FooterCMS";
 

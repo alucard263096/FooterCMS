@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <name>Category Example</name>
-  <tablename>tb_test_category</tablename>
-  <searchcondition>r_main.status&lt;&gt;'D'</searchcondition>
+  <name>General Text</name>
+  <tablename>tb_general</tablename>
+  <searchcondition>1=1</searchcondition>
   <fields>
+    <field>
+      <name>Uni Key</name>
+      <key>key</key>
+      <type>text</type>
+      <displayinlist>1</displayinlist>
+      <gotodetail>1</gotodetail>
+      <notnull>1</notnull>
+      <search>1</search>
+      <disableindetail>1</disableindetail>
+    </field>
     <field>
       <name>Name</name>
       <key>name</key>
@@ -14,22 +24,17 @@
       <notnull>1</notnull>
     </field>
     <field>
-      <name>Status</name>
-      <key>status</key>
-      <type>select</type>
+      <name>Positoin</name>
+      <key>position</key>
+      <type>longtext</type>
       <displayinlist>1</displayinlist>
-      <options>
-        <option>
-          <name>Active</name>
-          <value>A</value>
-        </option>
-        <option>
-          <name>Inactive</name>
-          <value>I</value>
-        </option>
-      </options>
       <search>1</search>
       <notnull>1</notnull>
+    </field>
+    <field>
+      <name>Content</name>
+      <key>content</key>
+      <type>html</type>
     </field>
   </fields>
   <options>
@@ -37,14 +42,11 @@
       <name>Add</name>
       <type>function</type>
       <function>addNew()</function>
-      <search>1</search>
-      <detail>1</detail>
     </option>
     <option>
       <name>Delete</name>
       <type>function</type>
-      <function>deleteInList()</function>
-      <search>1</search>
+      <function>btnDeleteInList()</function>
     </option>
   </options>
 </root>

@@ -120,7 +120,7 @@
                                     <hr />
                                     <div class="text-center">
                                         <button class="btn btn-primary" id="btnSave"><i class="glyphicon glyphicon-pencil  glyphicon-white"></i> {{$SysLang.model.save}}</button>
-                                        <button class="btn btn-primary" id="btnReturnToList"><i class="glyphicon glyphicon-list  glyphicon-white"></i> {{$SysLang.model.backtolist}}</button>
+                                        {{if $ModelData.nolist!="1"}}<button class="btn btn-primary" id="btnReturnToList"><i class="glyphicon glyphicon-list  glyphicon-white"></i> {{$SysLang.model.backtolist}}</button>{{/if}}
                                     </div>
                                </div>
                             </div>

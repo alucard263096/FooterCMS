@@ -1,20 +1,17 @@
 <?php
   require '../include/common.inc.php';
   include ROOT.'/include/init.inc.php';
-  require ROOT.'/classes/modelmgr/UserXmlModel.cls.php';
+  require ROOT.'/classes/modelmgr/BannerXmlModel.cls.php';
   $action=$_REQUEST["action"];
-  $model=new UserXmlModel("user.php");
+  $model=new BannerXmlModel("banner.php");
   
   
-	if($SysUser["is_admin"]!="Y"){
-		echo "System Error";
-		exit;
-	}
-
+	
+	
+	$smarty->assign("MyModule","website");
   if($action==""){
 
-	$smarty->assign("MyModule","admin");
-	$smarty->assign("MyMenuId","user_list");
+	$smarty->assign("MyMenuId","banner_list");
 	$model->ShowList($dbmgr,$smarty);
 
   }else if($action=="search"){
@@ -23,14 +20,12 @@
 
   }else if($action=="add"){
 
-	$smarty->assign("MyModule","admin");
-	$smarty->assign("MyMenuId","user_add");
+	$smarty->assign("MyMenuId","banner_add");
 	$model->Add($dbmgr,$smarty);
 
   }else if($action=="edit"){
 
-	$smarty->assign("MyModule","admin");
-	$smarty->assign("MyMenuId","user_add");
+	$smarty->assign("MyMenuId","banner_add");
 	$model->Edit($dbmgr,$smarty,$_REQUEST["id"]);
 
   }else if($action=="save"){

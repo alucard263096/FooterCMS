@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <name>Test Example</name>
-  <tablename>tb_test</tablename>
+  <name>Banner</name>
+  <tablename>tb_website_banner</tablename>
   <nolist>0</nolist>
   <searchcondition>r_main.status&lt;&gt;'D'</searchcondition>
   <fields>
@@ -15,60 +15,41 @@
       <disableindetail>0</disableindetail>
     </field>
     <field>
-      <name>Category</name>
-      <key>cate_id</key>
-      <type>fkey</type>
-      <displayfield>name</displayfield>
-      <displayinlist>1</displayinlist>
-      <gotodetail>1</gotodetail>
-      <search>1</search>
-      <notnull>1</notnull>
-      <tablename>tb_test_category</tablename>
-      <ntbname>r_cate</ntbname>
-      <condition>r_cate.status='A'</condition>
-    </field>
-    <field>
-      <name>Name</name>
-      <key>name</key>
-      <type>text</type>
-      <displayinlist>1</displayinlist>
-      <gotodetail>1</gotodetail>
-      <search>1</search>
-      <notnull>1</notnull>
-    </field>
-    <field>
-      <name>Summary</name>
-      <key>summary</key>
+      <name>Slogan</name>
+      <key>slogan</key>
       <type>longtext</type>
+      <displayinlist>1</displayinlist>
+      <gotodetail>1</gotodetail>
       <search>1</search>
+      <notnull>1</notnull>
+    </field>
+    <field>
+      <name>Label</name>
+      <key>label</key>
+      <type>longtext</type>
+      <notnull>1</notnull>
+    </field>
+    <field>
+      <name>Title</name>
+      <key>title</key>
+      <type>longtext</type>
       <notnull>1</notnull>
     </field>
     <field>
       <name>Content</name>
-      <key>content</key>
+      <key>cont</key>
       <type>html</type>
     </field>
     <field>
-      <name>Is Male</name>
-      <key>is_check</key>
-      <type>check</type>
-      <displayinlist>1</displayinlist>
-      <yvalue>Yes</yvalue>
-      <nvalue>No</nvalue>
+      <name>Link</name>
+      <key>link</key>
+      <type>longtext</type>
     </field>
     <field>
       <name>Image Upload</name>
-      <key>logo</key>
+      <key>pic</key>
       <type>upload</type>
-      <uploadmodule>test</uploadmodule>
-    </field>
-    <field>
-      <name>Applied Date</name>
-      <key>applied_date</key>
-      <type>datetime</type>
-      <displayinlist>1</displayinlist>
-      <search>1</search>
-      <notnull>1</notnull>
+      <uploadmodule>banner</uploadmodule>
     </field>
     <field>
       <name>Status</name>

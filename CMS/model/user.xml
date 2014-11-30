@@ -2,6 +2,7 @@
 <root>
   <name>User</name>
   <tablename>tb_user</tablename>
+  <searchcondition>r_main.status&lt;&gt;'D'</searchcondition>
   <fields>
     <field>
       <name>Login Name</name>

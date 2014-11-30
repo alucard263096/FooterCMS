@@ -52,7 +52,7 @@ class XmlModel
   }
 
   private function GetFKeyData($dbMgr,$displayfield,$tablename,$tablerename,$condition){
-	$sql="select id,$displayfield from $tablename as $tablerename where status<>'D' and $condition";
+	$sql="select id,$displayfield from $tablename as $tablerename where $condition";
 	$query = $dbMgr->query($sql);
 	$result = $dbMgr->fetch_array_all($query); 
 
@@ -101,7 +101,7 @@ class XmlModel
 		}
 	}
 
-	$sql=$sql."  where r_main.status<>'D' ";
+	$sql=$sql."  where  ".$this->XmlData["searchcondition"];
 	foreach ($fields as $value){
 		
 		if($value["search"]=="1"){
@@ -205,7 +205,7 @@ class XmlModel
 		$sql="insert into ".$this->XmlData["tablename"]." (id";
 		$fields=$this->XmlData["fields"]["field"];
 		foreach ($fields as $value){
-			$sql=$sql.",".$value["key"];
+			$sql=$sql.",`".$value["key"]."`";
 		}
 		$sql=$sql.",created_date,created_user,updated_date,updated_user ) values (";
 		$sql=$sql.$id;
@@ -225,7 +225,7 @@ class XmlModel
 		$fields=$this->XmlData["fields"]["field"];
 		foreach ($fields as $value){
 			if($value["type"]!="password"){
-				$sql=$sql.", ".$value["key"]."='".mysql_real_escape_string($request[$value["key"]])."'";
+				$sql=$sql.", `".$value["key"]."`='".mysql_real_escape_string($request[$value["key"]])."'";
 			}
 		}
 		$sql=$sql." where id=$id";
@@ -234,7 +234,7 @@ class XmlModel
 		foreach ($fields as $value){
 			if($value["type"]=="password"){
 				$sql="update ".$this->XmlData["tablename"]." set ";
-				$sql=$sql." ".$value["key"]."='".md5($request[$value["key"]])."'";
+				$sql=$sql." `".$value["key"]."`='".md5($request[$value["key"]])."'";
 				$sql=$sql." where id=$id and ".$value["key"]."<>'".mysql_real_escape_string($request[$value["key"]])."'";
 				$query = $dbMgr->query($sql);
 			}
