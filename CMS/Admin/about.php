@@ -9,6 +9,6 @@
 include ROOT.'/include/init.inc.php';
   
   $smarty->assign("MyModule","admin");
-	$smarty->assign("MyMenuId","about");
+  $smarty->assign("MyMenuId","about");
   $smarty->display(ROOT.'/templates/about.html');
 ?>

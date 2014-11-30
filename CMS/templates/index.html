@@ -32,18 +32,18 @@
                 <div class="col-lg-12">
                     <div class="alert alert-info">
                         <a class="close" data-dismiss="alert" href="#">&times;</a>
-                        {{if $ErrorMsg==""}}请输入回车或者点击登录按钮{{else}}{{$ErrorMsg}}{{/if}}
+                        {{if $ErrorMsg==""}}{{$SysLang.index.submittips}}{{else}}{{$ErrorMsg}}{{/if}}
                     </div>
                     <form method="post" action="index.php" class="bootstrap-admin-login-form">
-                        <h1>{{$Title}} <br /> 管理系统登录</h1>
+                        <h1>{{$Title}} <br /> {{$SysLang.index.systemlogin}}</h1>
                         <div class="form-group">
-                            <input class="form-control" type="text" name="login_id" value="{{$login_id}}" placeholder="用户名">
+                            <input class="form-control" type="text" name="login_id" value="{{$login_id}}" placeholder="{{$SysLang.common.loginname}}">
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="password" name="password" value="{{$password}}" placeholder="密码">
+                            <input class="form-control" type="password" name="password" value="{{$password}}" placeholder="{{$SysLang.common.password}}">
                         </div>
                         <input type="hidden" name="action" value="login">
-                        <button class="btn btn-lg btn-primary" type="submit">登录</button>
+                        <button class="btn btn-lg btn-primary" type="submit">{{$SysLang.common.login}}</button>
                     </form>
                 </div>
             </div>

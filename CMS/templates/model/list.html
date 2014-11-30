@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="page-header bootstrap-admin-content-title">
-                                <h1>{{$ModelData.name}} - 列表</h1>                                
+                                <h1>{{$ModelData.name}} - {{$SysLang.model.list}}</h1>                                
                                 {{foreach from=$ModelData.options.option item=rs}}                                
                                     {{if $rs.search=="1"}}
                                         {{if $rs.type=="link"}}    
@@ -29,7 +29,7 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <div class="text-muted bootstrap-admin-box-title">搜索条件</div>
+                                    <div class="text-muted bootstrap-admin-box-title">{{$SysLang.model.condition}}</div>
                                 </div>
                                 <div class="bootstrap-admin-panel-content">
                                     <div class="row form-horizontal">
@@ -43,14 +43,14 @@
                                             </div>
                                             {{elseif $rs.type=="datetime"}}
                                             <div class="col-md-8">
-                                                <div class="col-md-5" style="padding:0"><input type="text" class="form-control datepicker" id="condition_{{$rs.key}}_from"></div>
+                                                <div class="col-md-5" style="padding:0"><input type="text" class="form-control datepicker" id="condition_{{$rs.key}}_from" placeholder="{{$SysLang.model.from}}"></div>
                                                 <div class="col-md-2" style="padding:3px;text-align:center">-</div>
-                                                <div class="col-md-5" style="padding:0"><input type="text" class="form-control datepicker" id="condition_{{$rs.key}}_to"></div>
+                                                <div class="col-md-5" style="padding:0"><input type="text" class="form-control datepicker" id="condition_{{$rs.key}}_to" placeholder="{{$SysLang.model.to}}"></div>
                                             </div>                                                     
                                             {{elseif $rs.type=="fkey"}}
                                             <div class="col-md-8">
                                                 <select id="condition_{{$rs.key}}" class="form-control selectize-select">
-                                                    <option value="0">--Select--</option>
+                                                    <option value="0">--{{$SysLang.model.select}}--</option>
                                                     {{foreach from=$rs.options item=rsoption}}
                                                     <option value="{{$rsoption.id}}">{{$rsoption.name}}</option>
                                                     {{/foreach}}
@@ -59,7 +59,7 @@
                                             {{elseif $rs.type=="select" }}
                                             <div class="col-md-8">
                                                 <select id="condition_{{$rs.key}}" class="form-control selectize-select">
-                                                    <option value="no-value">--Select--</option>
+                                                    <option value="no-value">--{{$SysLang.model.select}}--</option>
                                                     {{foreach from=$rs.options.option item=rsoption}}
                                                     <option value="{{$rsoption.value}}">{{$rsoption.name}}</option>
                                                     {{/foreach}}
@@ -72,7 +72,7 @@
                                     </div>
                                     <hr />
                                     <div class="text-right">
-                                        <button class="btn btn-info" id="btnSearch"><i class="glyphicon glyphicon-refresh glyphicon-white"></i> 搜索</button>
+                                        <button class="btn btn-info" id="btnSearch"><i class="glyphicon glyphicon-refresh glyphicon-white"></i> {{$SysLang.model.search}}</button>
                                     </div>
                                </div>
                             </div>
@@ -83,7 +83,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <div class="text-muted bootstrap-admin-box-title">搜索结果</div>
+                                    <div class="text-muted bootstrap-admin-box-title">{{$SysLang.model.result}}</div>
                                 </div>
                                 <div class="bootstrap-admin-panel-content">
                                     <table class="datatable table table-striped table-bordered" id="searchResult">
@@ -112,8 +112,19 @@
                 </div>
 
 
+<script type="text/javascript" src="{{$rootpath}}/js/myjs.js"></script>
+{{foreach from=$ModelData.javascripts.javascript item=rs}}
+{{if $rs.search=="1"}}
+<script type="text/javascript" src="{{$rootpath}}/js/myjs/{{$rs.filename}}"></script>
+{{/if}}
+{{/foreach}}
 <script>
+    $(document).ready(function(){
+        myjs_listPageLoad();
+    });
     $(function () {
+
+
 
         $("#btnSearch").click(function () {
             
@@ -130,9 +141,12 @@
                         {{/if}}
                     {{/if}}
                 {{/foreach}}
-            };
+                };
+                 json= myjs_searchClick(json);
 
         $("#searchResult").load("{{$PageName}}",json,function(data){
+
+            myjs_afterResultLoad();
             
             $("#btnSearch").prop("disabled","");
             $('#searchResult').dataTable({"bRetrieve": true,
@@ -151,40 +165,63 @@
     }
 
     function btnDeleteInList(){
-        var idlist="0";
-        $("#searchResult input:checkbox:checked.RowSelect").each(function(){
-            idlist+=","+$(this).val();
-        });
-        if(idlist!="0"){
-            confirmDialog("系统消息","确认要删除吗?",function(){
+       
+        var isGo=deleteValidate();
+        if(isGo==false){
+            return;
+        }
+
+        confirmDialog("{{$SysLang.common.notice}}","{{$SysLang.model.deletesure}}",function(){
                 var idlist="0";
                 $("#searchResult input:checkbox:checked.RowSelect").each(function(){
                     idlist+=","+$(this).val();
                 });
                 if(idlist!="0"){
                     $.post("{{$PageName}}",{"action":"delete","idlist":idlist},function(data){
+                        
+                        if(myjs_afterdelete(data)==false){
+                            return;
+                        }
+
                         if(data=="success")
                         {
-                            //infoDialog("删除成功");
                             $("#btnSearch").click();
                         }
                         else
                         {
-                            //errorDialog("删除失败");
+                            errorDialog(data);
                         }
 			
                     });
                 }
             });
+    }
+    function deleteValidate(){
+        var message="";
+
+        var idlist="0";
+        $("#searchResult input:checkbox:checked.RowSelect").each(function(){
+            idlist+=","+$(this).val();
+        });
+        if(idlist=="0"){
+            message+="<p>{{$SysLang.model.atleastselectone}}</p>";
         }
+        message+myjs_delevalidate();
+
+        if(message!=""){
+            //infoDialog(message);
+            warningDialog(message);
+            return false;
+        }
+
+
+        return true;
+
     }
 
      
 
-    function testDialog(){
-
-        infoDialog("aa");
-    }
+   
 
 </script>
 

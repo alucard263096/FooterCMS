@@ -82,4 +82,12 @@
       <search>1</search>
     </option>
   </options>
+  <javascripts>
+    <javascript>
+      <filename>user.js</filename>
+      <detail>1</detail>
+    </javascript>
+    <javascript>
+    </javascript>
+  </javascripts>
 </root>

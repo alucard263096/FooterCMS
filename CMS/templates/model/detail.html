@@ -5,7 +5,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="page-header bootstrap-admin-content-title">
-                                <h1>{{$ModelData.name}} - {{if $action=="add"}}新增{{else}}修改{{/if}}</h1>                                
+                                <h1>{{$ModelData.name}} - {{if $action=="add"}}{{$SysLang.model.add}}{{else}}{{$SysLang.model.edit}}{{/if}}</h1>                                
                                 {{foreach from=$ModelData.options.option item=rs}}                                
                                     {{if $rs.detail=="1"}}
                                         {{if $rs.type=="link"}}    
@@ -27,7 +27,7 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <div class="text-muted bootstrap-admin-box-title">内容编辑</div>
+                                    <div class="text-muted bootstrap-admin-box-title">{{$SysLang.model.contentedit}}</div>
                                 </div>
                                 <div class="bootstrap-admin-panel-content">
                                     <div class="row form-horizontal">
@@ -36,7 +36,7 @@
                                         <div class="form-group col-md-6">
                                             <label class="col-md-4 control-label" >{{$rs.name}}</label>
                                             <div class="col-md-8">
-                                                <input type="text" {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}} class="form-control" value="{{$rs.value}}" id="content_{{$rs.key}}" {{if $rs.notnull=="1" }} placeholder="必填项" {{/if}} />
+                                                <input type="text" {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}} class="form-control" value="{{$rs.value}}" id="content_{{$rs.key}}" {{if $rs.notnull=="1" }} placeholder="{{$SysLang.model.required}}" {{/if}} />
                                             </div>
                                         </div>                                            
                                         {{elseif $rs.type=="password"}}
@@ -50,7 +50,7 @@
                                         <div class="form-group col-md-12">
                                             <label class="col-md-2 control-label" >{{$rs.name}}</label>
                                             <div class="col-md-10">
-                                                <input type="text" class="form-control" {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}} id="content_{{$rs.key}}" value="{{$rs.value}}" {{if $rs.notnull=="1" }} placeholder="必填项" {{/if}} />
+                                                <input type="text" class="form-control" {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}} id="content_{{$rs.key}}" value="{{$rs.value}}" {{if $rs.notnull=="1" }} placeholder="{{$SysLang.model.required}}" {{/if}} />
                                             </div>
                                         </div>                                            
                                         {{elseif $rs.type=="html"}}
@@ -64,14 +64,14 @@
                                         <div class="form-group col-md-6">
                                             <label class="col-md-4 control-label" >{{$rs.name}}</label>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control datepicker" {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}} id="content_{{$rs.key}}" value="{{$rs.value}}" {{if $rs.notnull=="1" }} placeholder="必填项" {{/if}} />
+                                                <input type="text" class="form-control datepicker" {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}} id="content_{{$rs.key}}" value="{{$rs.value}}" {{if $rs.notnull=="1" }} placeholder="{{$SysLang.model.required}}" {{/if}} />
                                             </div>
                                         </div>                                            
                                         {{elseif $rs.type=="number"}}
                                         <div class="form-group col-md-6">
                                             <label class="col-md-4 control-label" >{{$rs.name}}</label>
                                             <div class="col-md-8">
-                                                <input type="number" class="form-control" {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}} value="{{$rs.value}}" id="content_{{$rs.key}}"  {{if $rs.notnull=="1" }} placeholder="必填项" {{/if}} />
+                                                <input type="number" class="form-control" {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}} value="{{$rs.value}}" id="content_{{$rs.key}}"  {{if $rs.notnull=="1" }} placeholder="{{$SysLang.model.required}}" {{/if}} />
                                             </div>
                                         </div>                                            
                                         {{elseif $rs.type=="check"}}
@@ -86,7 +86,7 @@
                                             <label class="col-md-4 control-label" >{{$rs.name}}</label>
                                             <div class="col-md-8">
                                                 <input  {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}}  class="form-control uniform_on" name="file_{{$rs.key}}" id="file_{{$rs.key}}" onchange="upload('{{$rs.key}}', '{{$rs.uploadmodule}}')" type="file" />
-                                                <a id="view_{{$rs.key}}" target="_blank" {{if $rs.value==""}}style="display:none;"{{else}}href="{{$uploadpath}}/{{$rs.uploadmodule}}/{{$rs.value}}"{{/if}} >查看上传</a>
+                                                <a id="view_{{$rs.key}}" target="_blank" {{if $rs.value==""}}style="display:none;"{{else}}href="{{$uploadpath}}/{{$rs.uploadmodule}}/{{$rs.value}}"{{/if}} >{{$SysLang.model.viewupload}}</a>
                                                 <input class="uniform_on" type="hidden" id="content_{{$rs.key}}" value="{{$rs.value}}" />
                                             </div>
                                         </div>                                                 
@@ -119,8 +119,8 @@
                                     </div>
                                     <hr />
                                     <div class="text-center">
-                                        <button class="btn btn-primary" id="btnSave"><i class="glyphicon glyphicon-pencil  glyphicon-white"></i> 保存</button>
-                                        <button class="btn btn-primary" id="btnReturnToList"><i class="glyphicon glyphicon-list  glyphicon-white"></i> 返回列表</button>
+                                        <button class="btn btn-primary" id="btnSave"><i class="glyphicon glyphicon-pencil  glyphicon-white"></i> {{$SysLang.model.save}}</button>
+                                        <button class="btn btn-primary" id="btnReturnToList"><i class="glyphicon glyphicon-list  glyphicon-white"></i> {{$SysLang.model.backtolist}}</button>
                                     </div>
                                </div>
                             </div>
@@ -128,8 +128,16 @@
                     </div>
                 </div>
 
-
+<script type="text/javascript" src="{{$rootpath}}/js/myjs.js"></script>
+{{foreach from=$ModelData.javascripts.javascript item=rs}}
+{{if $rs.detail=="1"}}
+<script type="text/javascript" src="{{$rootpath}}/js/myjs/{{$rs.filename}}"></script>
+{{/if}}
+{{/foreach}}
 <script>
+    $(document).ready(function(){
+        myjs_detailPageLoad();
+    });
     $(function () {
         // CKEditor Full
         $('textarea.ckeditor').ckeditor({
@@ -145,7 +153,7 @@
     });
 
     function save(){
-        var isGo=validate();
+        var isGo=saveValidate();
         if(isGo==false){
             return;
         }
@@ -160,24 +168,29 @@
         {{/if}}
         {{/foreach}}
         };
+            json=myjs_saveClick(json);
+
             $.post("{{$PageName}}",json,function(data){
                 
                 $("#btnSave").prop("disabled","");
-            if(data.substring(0,5)=="right"){
-                id=data.substring(5,data.length);
-                infoDialog("保存成功");
-                {{if $action=="add"}}
-                self.location='{{$PageName}}?action=edit&id='+id;
-                {{/if}}
-            }else{
-                    errorDialog("保存失败，请联系管理员");
-            }
+                if(myjs_aftersave(data)==false){
+                    return;
+                }
+                if(data.substring(0,5)=="right"){
+                    id=data.substring(5,data.length);
+                    infoDialog("{{$SysLang.model.savesuccess}}");
+                    {{if $action=="add"}}
+                    self.location='{{$PageName}}?action=edit&id='+id;
+                    {{/if}}
+                }else{
+                        errorDialog(data);
+                }
         });
 
             
     }
 
-    function validate() {
+    function saveValidate() {
 
         var message="";
 
@@ -185,20 +198,22 @@
         {{if $rs.notnull=="1" }}
             {{if $rs.type=="fkey"}}
             if($("#content_{{$rs.key}}").val()=="0"){
-                message+="<p>请输入或选择<span style='color:red;'>{{$rs.name}}</span></p>";
+                message+="<p>{{$SysLang.model.pleaseenter}}<span style='color:red;'>{{$rs.name}}</span></p>";
             }
             {{else}}
             if($("#content_{{$rs.key}}").val()=="no-value"
                 ||$("#content_{{$rs.key}}").val()==""){
-                message+="<p>请输入或选择<span style='color:red;'>{{$rs.name}}</span></p>";
+                message+="<p>{{$SysLang.model.pleaseenter}}<span style='color:red;'>{{$rs.name}}</span></p>";
             }
             {{/if}}
         {{/if}}
         {{/foreach}}
 
+       message+myjs_savevalidate();
+
        if(message!=""){
            //infoDialog(message);
-           errorDialog(message);
+           warningDialog(message);
            return false;
        }
        return true;
@@ -221,11 +236,11 @@
 			            $("#view_" + key).attr("href", "{{$uploadpath}}/"+module+"/" + str.split('|~~|')[1]).show();
                         
 			        } else {
-			            errorDialog("上传失败，请联系管理员");
+			            errorDialog("{{$SysLang.model.uploaderror}}");
 			        }
 			    },
 			    "error": function (data, status, e) {
-			        errorDialog("上传失败，请联系管理员");
+			        errorDialog("{{$SysLang.model.uploaderror}}");
 			    }
 			}
 		);

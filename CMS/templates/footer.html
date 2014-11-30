@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <footer role="contentinfo">
-                    <p class="left">Helpfooter Studio</p>
+                    <p class="left">{{$SysLang.common.cmsname}}{{$SysLang.common.version}}{{$SysLang.common.madeby}} <a href="mailto:alucrd263096@126.com">Steve Cai</a></p>
                     <p class="right">&copy; 2014 <a href="http://www.helpfooter.com" target="_blank">Helpfooter.com</a></p>
                 </footer>
             </div>
@@ -16,26 +16,19 @@
 </div>
 
 
-
-
-
-
-
-
-
 <div id="dialog_box" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog_boxtitle" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 id="dialog_boxtitle" class="modal-title">系统信息</h4>
+                <h4 id="dialog_boxtitle" class="modal-title">{{$SysLang.common.notice}}</h4>
             </div>
             <div class="modal-body">
                 <p id="dialog_boxmsg"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" id="dialog_boxBtnConfirm" class="btn btn-success">确定</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="dialog_boxBtnConfirm" class="btn btn-success">{{$SysLang.common.ok}}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{$SysLang.common.close}}</button>
             </div>
         </div>
     </div>
@@ -107,17 +100,17 @@
     });
 
     function infoDialog(msg) {
-        $("#dialog_boxtitle").text("系统消息");
+        $("#dialog_boxtitle").text("{{$SysLang.common.notice}}");
         showDialog(msg);
     }
 
     function warningDialog(msg) {
-        $("#dialog_boxtitle").text("系统警告");
+        $("#dialog_boxtitle").text("{{$SysLang.common.warning}}");
         showDialog(msg);
     }
 
     function errorDialog(msg) {
-        $("#dialog_boxtitle").text("系统错误");
+        $("#dialog_boxtitle").text("{{$SysLang.common.error}}");
         showDialog(msg);
     }
     function showDialog(msg) {

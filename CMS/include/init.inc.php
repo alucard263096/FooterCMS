@@ -27,7 +27,6 @@ $path=ROOT."/model/menu.xml";
 $fp = fopen($path,"r");
 $str = fread($fp,filesize($path));
 $MenuArray=json_decode(json_encode((array) simplexml_load_string($str)), true);
-print_r($MenuArray);
 $_SESSION[SESSIONNAME]["SystemMenu"]=$MenuArray;
 }
 

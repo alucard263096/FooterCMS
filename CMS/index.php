@@ -9,12 +9,12 @@
 
   if($_REQUEST["action"]=="login"){
 	if(trim($_REQUEST["login_id"])==""){
-		$smarty->assign("ErrorMsg","用户名不能为空");
+		$smarty->assign("ErrorMsg",$SysLang["index"]["logincannotbenull"]);
 	}else{
 		$smarty->assign("login_id",$_REQUEST["login_id"]);
 	}
 	if(trim($_REQUEST["password"])==""){
-		$smarty->assign("ErrorMsg","密码不能为空");
+		$smarty->assign("ErrorMsg",$SysLang["index"]["pswcannotbenull"]);
 	}else{
 		$smarty->assign("password",$_REQUEST["password"]);
 	}
@@ -23,12 +23,12 @@
 	$password=$_REQUEST["password"];
 	$userRows=$userMgr->getUserByName($login_id);
 
-	if(count($userRows)==0){
-		$smarty->assign("ErrorMsg","用户名无效");
+	if(count($userRows)==0||$userRows[0]["status"]!="A"){
+		$smarty->assign("ErrorMsg",$SysLang["index"]["invaliduser"]);
 	}else{
 		$user=$userRows[0];
 		if(md5($password)!=$user["password"]){
-			$smarty->assign("ErrorMsg","密码错误");
+			$smarty->assign("ErrorMsg",$SysLang["index"]["incorrectpsw"]);
 		}else{
 			$_SESSION[SESSIONNAME]["SysUser"]=$user;
 			
