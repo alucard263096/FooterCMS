@@ -30,7 +30,7 @@ $CONFIG['error_handler'] ="E_ALL";
 #[Database]
 $CONFIG['database']['provider']	= 'mysql';  //mssql,sqlsrv
 $CONFIG['database']['host']		= 'localhost';  
-$CONFIG['database']['database']	= 'portalsite_lm';  
+$CONFIG['database']['database']	= 'footercms';  
 $CONFIG['database']['user']		= 'root';  
 $CONFIG['database']['psw']		= 'root'; 
 
