@@ -5,7 +5,7 @@ $CONFIG['rootpath']		= '/FooterCMS/CMS';
 //$CONFIG['charset']		= 'utf-8'; 
 $CONFIG['Title']             = 'FooterCMS';
 $CONFIG['URL']="http://localhost/FooterCMS/CMS";
-$CONFIG['lang']="en-us";//zh-cn
+$CONFIG['lang']="zh-cn";//en-us
 $CONFIG["frontendurl"]="http://localhost/FooterCMS/";
 $CONFIG["SessionName"]="FooterCMS";
 
@@ -30,7 +30,7 @@ $CONFIG['error_handler'] ="E_ALL";
 #[Database]
 $CONFIG['database']['provider']	= 'mysql';  //mssql,sqlsrv
 $CONFIG['database']['host']		= 'localhost';  
-$CONFIG['database']['database']	= 'footercms';  
+$CONFIG['database']['database']	= 'portalsite_lm';  
 $CONFIG['database']['user']		= 'root';  
 $CONFIG['database']['psw']		= 'root'; 
 

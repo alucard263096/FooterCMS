@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <name>Website Setting</name>
+  <name>网站设置</name>
   <tablename>tb_website_base</tablename>
   <nolist>1</nolist>
   <fields>
     <field>
-      <name>Website Name</name>
+      <name>网站名称</name>
       <key>website_name</key>
       <type>text</type>
     </field>
     <field>
-      <name>Browser Logo</name>
+      <name>网页图标</name>
       <key>favfile</key>
       <type>upload</type>
       <uploadmodule>fav</uploadmodule>
     </field>
     <field>
-      <name>Contacter</name>
+      <name>联系人姓名</name>
       <key>contacter</key>
       <type>text</type>
     </field>
@@ -26,32 +26,32 @@
       <type>text</type>
     </field>
     <field>
-      <name>Email</name>
+      <name>邮箱</name>
       <key>email</key>
       <type>text</type>
     </field>
     <field>
-      <name>Mobile</name>
+      <name>手机号码</name>
       <key>mobile</key>
       <type>text</type>
     </field>
     <field>
-      <name>Phone</name>
+      <name>电话</name>
       <key>phone</key>
       <type>text</type>
     </field>
     <field>
-      <name>Seo Title</name>
+      <name>Seo 标题</name>
       <key>seo_title</key>
       <type>longtext</type>
     </field>
     <field>
-      <name>Seo Keywords</name>
+      <name>Seo 关键字</name>
       <key>seo_keywords</key>
       <type>longtext</type>
     </field>
     <field>
-      <name>Seo description</name>
+      <name>Seo 详情</name>
       <key>seo_description</key>
       <type>longtext</type>
     </field>

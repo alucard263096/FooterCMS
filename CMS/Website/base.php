@@ -11,7 +11,6 @@
 		echo "System Error";
 		exit;
 	}
-
   if($action==""){
 
 	$smarty->assign("MyMenuId","base");

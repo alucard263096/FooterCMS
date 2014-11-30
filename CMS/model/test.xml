@@ -77,11 +77,11 @@
       <displayinlist>1</displayinlist>
       <options>
         <option>
-          <name>Active</name>
+          <name>启用</name>
           <value>A</value>
         </option>
         <option>
-          <name>Inactive</name>
+          <name>禁用</name>
           <value>I</value>
         </option>
       </options>
@@ -91,14 +91,14 @@
   </fields>
   <options>
     <option>
-      <name>Add</name>
+      <name>新增</name>
       <type>function</type>
       <function>addNew()</function>
       <search>1</search>
       <detail>1</detail>
     </option>
     <option>
-      <name>Delete</name>
+      <name>删除</name>
       <type>function</type>
       <function>btnDeleteInList()</function>
       <search>1</search>
