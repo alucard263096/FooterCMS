@@ -119,6 +119,7 @@
 {{/if}}
 {{/foreach}}
 <script>
+    var ds=null;
     $(document).ready(function(){
         myjs_listPageLoad();
     });
@@ -149,15 +150,29 @@
             myjs_afterResultLoad();
             
             $("#btnSearch").prop("disabled","");
-            $('#searchResult').dataTable({"bRetrieve": true,
+            if(ds!=null){
+                var oldwidth=$("#searchResult").width();
+                ds.fnDestroy();
+                ds=$('#searchResult').dataTable({"bRetrieve": true,
                     "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
                     "sPaginationType": "bootstrap",
                     "oLanguage": {
                         "sLengthMenu": "_MENU_ records per page"
                     }
                 });
+                ds.fnAdjustColumnSizing(); 
+                $("#searchResult").width(oldwidth);
+            }else{
+                ds=$('#searchResult').dataTable({"bRetrieve": true,
+                    "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+                    "sPaginationType": "bootstrap",
+                    "oLanguage": {
+                        "sLengthMenu": "_MENU_ records per page"
+                    }
+                });
+                ds.fnAdjustColumnSizing();
+            }
             });
-
         });
     });
     function addNew(){
