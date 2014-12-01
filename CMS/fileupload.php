@@ -4,6 +4,10 @@
  $field=$_REQUEST["field"];
  $module=$_REQUEST["module"];
  $file=$_FILES[$field];
+ if($file==""){
+	echo "Fils is empty";
+	exit;
+ }
  $filename=date('ymdHIs').$file["name"];
  $folder=ROOT."/".$CONFIG['fileupload']['upload_path']."/$module/";
  if(!file_exists($folder)){
