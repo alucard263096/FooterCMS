@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `portalsite_lm` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `portalsite_lm`;
+CREATE DATABASE  IF NOT EXISTS `footercms` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `footercms`;
 -- MySQL dump 10.13  Distrib 5.6.19, for Win32 (x86)
 --
--- Host: localhost    Database: portalsite_lm
+-- Host: localhost    Database: footercms
 -- ------------------------------------------------------
 -- Server version	5.6.21-enterprise-commercial-advanced-log
 
