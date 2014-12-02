@@ -95,7 +95,7 @@
                                             <label class="col-md-4 control-label">{{$rs.name}}</label>
                                             <div class="col-md-8">
                                                 <select {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}}  id="content_{{$rs.key}}" class="form-control selectize-select">
-                                                    <option value="0">--Select--</option>
+                                                    <option value="0">--{{$SysLang.model.select}}--</option>
                                                     {{foreach from=$rs.options item=rsoption}}
                                                     <option {{if $rs.value==$rsoption.id}}selected{{/if}} value="{{$rsoption.id}}">{{$rsoption.name}}</option>
                                                     {{/foreach}}
@@ -107,7 +107,7 @@
                                             <label class="col-md-4 control-label" >{{$rs.name}}</label>
                                             <div class="col-md-8">
                                                 <select {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}}  id="content_{{$rs.key}}" class="form-control selectize-select">
-                                                    <option value="no-value">--Select--</option>
+                                                    <option value="no-value">--{{$SysLang.model.select}}--</option>
                                                     {{foreach from=$rs.options.option item=rsoption}}
                                                     <option {{if $rs.value==$rsoption.value}}selected{{/if}} value="{{$rsoption.value}}">{{$rsoption.name}}</option>
                                                     {{/foreach}}

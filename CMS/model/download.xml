@@ -1,53 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <name>User</name>
-  <tablename>tb_user</tablename>
-  <searchcondition>r_main.status&lt;&gt;'D'</searchcondition>
+  <name>下载</name>
+  <tablename>tb_download_file</tablename>
+  <nolist>0</nolist>
+  <searchcondition>r_main.status&lt;&gt;'D' and r_main.category_id&gt;0</searchcondition>
   <fields>
     <field>
-      <name>用户名</name>
-      <key>login_id</key>
+      <name>序号</name>
+      <key>seq</key>
+      <type>number</type>
+      <notnull>1</notnull>
+      <disableindetail>0</disableindetail>
+    </field>
+    <field>
+      <name>下载分类</name>
+      <key>category_id</key>
+      <type>fkey</type>
+      <displayfield>name</displayfield>
+      <displayinlist>1</displayinlist>
+      <gotodetail>1</gotodetail>
+      <search>1</search>
+      <notnull>1</notnull>
+      <tablename>tb_download_category</tablename>
+      <ntbname>r_cate</ntbname>
+      <condition>r_cate.status='A'</condition>
+    </field>
+    <field>
+      <name>名称</name>
+      <key>name</key>
       <type>text</type>
       <displayinlist>1</displayinlist>
       <gotodetail>1</gotodetail>
-      <notnull>1</notnull>
-      <search>1</search>
-      <disableindetail>1</disableindetail>
-    </field>
-    <field>
-      <name>密码</name>
-      <key>password</key>
-      <type>password</type>
-      <notnull>1</notnull>
-    </field>
-    <field>
-      <name>是否管理员</name>
-      <key>is_admin</key>
-      <type>check</type>
-      <displayinlist>1</displayinlist>
-      <yvalue>Yes</yvalue>
-      <nvalue>No</nvalue>
-    </field>
-    <field>
-      <name>用户姓名</name>
-      <key>user_name</key>
-      <type>text</type>
-      <displayinlist>1</displayinlist>
-      <gotodetail>1</gotodetail>
-      <notnull>1</notnull>
-      <search>1</search>
-    </field>
-    <field>
-      <name>邮箱地址</name>
-      <key>email</key>
-      <type>text</type>
       <search>1</search>
       <notnull>1</notnull>
     </field>
     <field>
-      <name>备注</name>
-      <key>remarks</key>
+      <name>外部下载链接</name>
+      <key>extlink</key>
       <type>longtext</type>
+      <notnull>1</notnull>
+    </field>
+    <field>
+      <name>下载文件</name>
+      <key>filename</key>
+      <type>upload</type>
+      <uploadmodule>download</uploadmodule>
     </field>
     <field>
       <name>状态</name>
@@ -83,12 +80,4 @@
       <search>1</search>
     </option>
   </options>
-  <javascripts>
-    <javascript>
-      <filename>user.js</filename>
-      <detail>1</detail>
-    </javascript>
-    <javascript>
-    </javascript>
-  </javascripts>
 </root>

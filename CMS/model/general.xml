@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <name>General Text</name>
+  <name>页面文字</name>
   <tablename>tb_general</tablename>
   <searchcondition>1=1</searchcondition>
   <fields>
     <field>
-      <name>Uni Key</name>
+      <name>标识符</name>
       <key>key</key>
       <type>text</type>
       <displayinlist>1</displayinlist>
@@ -15,7 +15,7 @@
       <disableindetail>1</disableindetail>
     </field>
     <field>
-      <name>Name</name>
+      <name>名称</name>
       <key>name</key>
       <type>text</type>
       <displayinlist>1</displayinlist>
@@ -24,7 +24,7 @@
       <notnull>1</notnull>
     </field>
     <field>
-      <name>Positoin</name>
+      <name>位置</name>
       <key>position</key>
       <type>longtext</type>
       <displayinlist>1</displayinlist>
@@ -32,19 +32,19 @@
       <notnull>1</notnull>
     </field>
     <field>
-      <name>Content</name>
+      <name>内容</name>
       <key>content</key>
       <type>html</type>
     </field>
   </fields>
   <options>
     <option>
-      <name>Add</name>
+      <name>新增</name>
       <type>function</type>
       <function>addNew()</function>
     </option>
     <option>
-      <name>Delete</name>
+      <name>删除</name>
       <type>function</type>
       <function>btnDeleteInList()</function>
     </option>
