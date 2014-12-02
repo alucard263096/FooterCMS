@@ -31,3 +31,13 @@ CHANGE COLUMN `length` `length` INT(11) NULL ;
 
 ALTER TABLE `portalsite_lm`.`tb_general` 
 CHANGE COLUMN `type` `type` varchar(30) NULL ;
+
+
+
+
+
+
+
+ALTER TABLE `lm_live`.`tb_city` 
+ADD COLUMN `id` INT NULL AFTER `postCode`;
+update `lm_live`.tb_city set id=serialId;

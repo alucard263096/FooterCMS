@@ -128,29 +128,34 @@
         </submenu>
       </submenus>
     </mainmenu>
-    <!--<mainmenu>
-      <module>test</module>
-      <name>Example</name>
+    <mainmenu>
+      <module>partner</module>
+      <name>伙伴管理</name>
       <submenus>
         <submenu>
-          <id>test_list</id>
-          <name>Test List</name>
-          <url>/Example/test.php</url>
+          <id>partner_list</id>
+          <name>合作伙伴列表</name>
+          <url>/Partner/partner.php</url>
         </submenu>
         <submenu>
-          <id>test_add</id>
-          <name>Test Add</name>
-          <url>/Example/test.php?action=add</url>
+          <id>partner_add</id>
+          <name>合作伙伴新增</name>
+          <url>/Partner/partner.php?action=add</url>
         </submenu>
         <submenu>
-          <id>tcat_list</id>
-          <name>Test Category List</name>
-          <url>/Example/testcat.php</url>
+          <id>manager_list</id>
+          <name>分区经理列表</name>
+          <url>/Partner/partner.php</url>
         </submenu>
         <submenu>
-          <id>tcat_add</id>
-          <name>Test Category Add</name>
-          <url>/Example/testcat.php?action=add</url>
+          <id>manager_add</id>
+          <name>分区经理新增</name>
+          <url>/Partner/partner.php?action=add</url>
+        </submenu>
+        <submenu>
+          <id>requisition_list</id>
+          <name>合作伙伴列表</name>
+          <url>/Partner/partner.php</url>
         </submenu>
       </submenus>
     </mainmenu>

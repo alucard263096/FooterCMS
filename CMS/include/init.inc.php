@@ -19,7 +19,7 @@ if(isset($_SESSION[SESSIONNAME]["url_request"]))
 $SysUser=$_SESSION[SESSIONNAME]["SysUser"];
 
 //Menu init
-if(isset($_SESSION[SESSIONNAME]["SystemMenu"])){
+if(1==2&&isset($_SESSION[SESSIONNAME]["SystemMenu"])){
 	$MenuArray=$_SESSION[SESSIONNAME]["SystemMenu"];
 }else{
 
