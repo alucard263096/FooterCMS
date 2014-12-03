@@ -128,37 +128,5 @@
         </submenu>
       </submenus>
     </mainmenu>
-    <mainmenu>
-      <module>partner</module>
-      <name>伙伴管理</name>
-      <submenus>
-        <submenu>
-          <id>partner_list</id>
-          <name>合作伙伴列表</name>
-          <url>/Partner/partner.php</url>
-        </submenu>
-        <submenu>
-          <id>partner_add</id>
-          <name>合作伙伴新增</name>
-          <url>/Partner/partner.php?action=add</url>
-        </submenu>
-        <submenu>
-          <id>manager_list</id>
-          <name>分区经理列表</name>
-          <url>/Partner/manager.php</url>
-        </submenu>
-        <submenu>
-          <id>manager_add</id>
-          <name>分区经理新增</name>
-          <url>/Partner/manager.php?action=add</url>
-        </submenu>
-        <submenu>
-          <id>requisition_list</id>
-          <name>加盟申请列表</name>
-          <url>/Partner/requisition.php</url>
-        </submenu>
-      </submenus>
-    </mainmenu>
-    -->
   </mainmenus>
 </root>

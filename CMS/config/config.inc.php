@@ -30,7 +30,7 @@ $CONFIG['error_handler'] ="E_ALL";
 #[Database]
 $CONFIG['database']['provider']	= 'mysql';  //mssql,sqlsrv
 $CONFIG['database']['host']		= 'localhost';  
-$CONFIG['database']['database']	= 'lm_live';  
+$CONFIG['database']['database']	= 'footercms';  
 $CONFIG['database']['user']		= 'root';  
 $CONFIG['database']['psw']		= 'root'; 
 
