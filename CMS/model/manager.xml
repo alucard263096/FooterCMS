@@ -1,52 +1,70 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <name>用户</name>
-  <tablename>tb_user</tablename>
-  <searchcondition>r_main.status&lt;&gt;'D'</searchcondition>
+  <name>分区经理</name>
+  <tablename>tb_manager</tablename>
+  <nolist>0</nolist>
+  <searchcondition>r_main.status&lt;&gt;'D' </searchcondition>
   <fields>
     <field>
-      <name>用户名</name>
-      <key>login_id</key>
+      <name>中文名</name>
+      <key>chname</key>
       <type>text</type>
       <displayinlist>1</displayinlist>
       <gotodetail>1</gotodetail>
-      <notnull>1</notnull>
       <search>1</search>
-      <disableindetail>1</disableindetail>
-    </field>
-    <field>
-      <name>密码</name>
-      <key>password</key>
-      <type>password</type>
       <notnull>1</notnull>
     </field>
     <field>
-      <name>是否管理员</name>
-      <key>is_admin</key>
-      <type>check</type>
-      <displayinlist>1</displayinlist>
-      <yvalue>Yes</yvalue>
-      <nvalue>No</nvalue>
+      <name>英文名</name>
+      <key>engname</key>
+      <type>text</type>
+      <notnull>1</notnull>
     </field>
     <field>
-      <name>用户姓名</name>
-      <key>user_name</key>
+      <name>职位</name>
+      <key>position</key>
       <type>text</type>
       <displayinlist>1</displayinlist>
-      <gotodetail>1</gotodetail>
       <notnull>1</notnull>
-      <search>1</search>
     </field>
     <field>
-      <name>邮箱地址</name>
+      <name>联系电话</name>
+      <key>tel</key>
+      <type>text</type>
+      <displayinlist>1</displayinlist>
+      <search>1</search>
+      <notnull>1</notnull>
+    </field>
+    <field>
+      <name>QQ</name>
+      <key>qq</key>
+      <type>text</type>
+    </field>
+    <field>
+      <name>邮箱</name>
       <key>email</key>
       <type>text</type>
-      <search>1</search>
+    </field>
+    <field>
+      <name>地址</name>
+      <key>address</key>
+      <type>longtext</type>
+    </field>
+    <field>
+      <name>管理省份</name>
+      <key>provinces</key>
+      <type>longtext</type>
+      <displayinlist>1</displayinlist>
       <notnull>1</notnull>
+    </field>
+    <field>
+      <name>详细介绍</name>
+      <key>description</key>
+      <type>longtext</type>
     </field>
     <field>
       <name>备注</name>
-      <key>remarks</key>
+      <key>remark</key>
       <type>longtext</type>
     </field>
     <field>
@@ -85,8 +103,9 @@
   </options>
   <javascripts>
     <javascript>
-      <filename>user.js</filename>
+      <filename>manager.js</filename>
       <detail>1</detail>
+      <search>1</search>
     </javascript>
     <javascript>
     </javascript>
