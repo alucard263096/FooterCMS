@@ -3,6 +3,10 @@
  require ROOT.'/classes/obj/upload.php';
  $field=$_REQUEST["field"];
  $module=$_REQUEST["module"];
+ if($module==""){
+ $module="default";
+ $field="upload";
+ }
  $file=$_FILES[$field];
  if($file==""){
 	echo "Fils is empty";
