@@ -110,12 +110,16 @@ var myjs_detailPageLoad = function () {
     }
 
     var provincestr = $("#content_provinces").val();
+
     var arr = provincestr.split(",");
     var isFirst = true;
     for (var i = 0; i < arr.length; i++) {
         if ($.trim(arr[i]) != "") {
             $("#procode_" + $.trim(arr[i])).prop("checked", "checked");
         }
+    }
+    if (provincestr == "") {
+        $("#content_provinces").val("aa-dara");
     }
 };
 
