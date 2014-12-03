@@ -52,7 +52,8 @@ class XmlModel
   }
 
   private function GetFKeyData($dbMgr,$displayfield,$tablename,$tablerename,$condition){
-	$sql="select id,$displayfield from $tablename as $tablerename where $condition";
+
+	$sql="select id,$displayfield as name from $tablename as $tablerename where $condition";
 	$query = $dbMgr->query($sql);
 	$result = $dbMgr->fetch_array_all($query); 
 

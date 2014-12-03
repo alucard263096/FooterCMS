@@ -144,7 +144,7 @@
             height: '200px',
             allowedContent: true
         });
-        $('input[type="checkbox"],[type="radio"]').not('#create-switch').bootstrapSwitch();
+        $('input[type="checkbox"],[type="radio"]').not('#create-switch').not('.multicheckbox').bootstrapSwitch();
         $('#btnSave').click(save);
         $("#btnReturnToList").click(function(){
             self.location="{{$PageName}}";
