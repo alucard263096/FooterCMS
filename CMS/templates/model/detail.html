@@ -142,7 +142,13 @@
         // CKEditor Full
         $('textarea.ckeditor').ckeditor({
             height: '200px',
-            allowedContent: true
+            allowedContent: true,
+            filebrowserBrowseUrl : '{{$rootpath}}/vendors/ckeditor/ckfinder/ckfinder.html',
+            filebrowserImageBrowseUrl : '{{$rootpath}}/vendors/ckeditor/ckfinder/ckfinder.html?Type=Images',
+            filebrowserFlashBrowseUrl : '{{$rootpath}}/vendors/ckeditor/ckfinder/ckfinder.html?Type=Flash',
+            filebrowserUploadUrl : '{{$rootpath}}/vendors/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+            filebrowserImageUploadUrl : '{{$rootpath}}/vendors/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+            filebrowserFlashUploadUrl : '{{$rootpath}}/vendors/ckeditor/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
         });
         $('input[type="checkbox"],[type="radio"]').not('#create-switch').not('.multicheckbox').bootstrapSwitch();
         $('#btnSave').click(save);
