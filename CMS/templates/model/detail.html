@@ -6,6 +6,7 @@
                         <div class="col-lg-12">
                             <div class="page-header bootstrap-admin-content-title">
                                 <h1>{{$ModelData.name}} - {{if $action=="add"}}{{$SysLang.model.add}}{{else}}{{$SysLang.model.edit}}{{/if}}</h1>                                
+                                {{if $parenturl==""}}
                                 {{foreach from=$ModelData.options.option item=rs}}                                
                                     {{if $rs.detail=="1"}}
                                         {{if $rs.type=="link"}}    
@@ -19,6 +20,7 @@
                                         {{/if}}                                 
                                     {{/if}} 
                                 {{/foreach}}
+                                {{/if}}
                             </div>
                         </div>
                     </div>
@@ -113,14 +115,25 @@
                                                     {{/foreach}}
                                                 </select>
                                             </div>
-                                        </div>                              
+                                        </div>                                           
+                                        {{elseif $action!="add" and $rs.type=="grid"}}
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-2 control-label">{{$rs.name}}{{$SysLang.model.list}}</label>
+                                            <div class="col-md-10">
+                                                <button class="btn btn-primary" onclick="window.location.href='{{$rootpath}}/{{$rs.newitemurl}}&parenturl={{$request_url_encode}}';"><i class="glyphicon glyphicon-plus  glyphicon-white"></i> {{$SysLang.model.add}}{{$rs.name}}</button>
+                                                <table class="table table-striped" id="content_{{$rs.key}}"></table>
+                                            </div>
+                                        </div>             
                                         {{/if}}
                                         {{/foreach}}
                                     </div>
                                     <hr />
                                     <div class="text-center">
                                         <button class="btn btn-primary" id="btnSave"><i class="glyphicon glyphicon-pencil  glyphicon-white"></i> {{$SysLang.model.save}}</button>
-                                        {{if $ModelData.nolist!="1"}}<button class="btn btn-primary" id="btnReturnToList"><i class="glyphicon glyphicon-list  glyphicon-white"></i> {{$SysLang.model.backtolist}}</button>{{/if}}
+                                        {{if $parenturl!=""}}
+                                        <button class="btn btn-primary" onclick="window.location.href='{{$parenturl}}';"><i class="glyphicon glyphicon-list  glyphicon-white"></i> {{$SysLang.model.back}}</button>
+                                        {{elseif $ModelData.nolist!="1"}}<button class="btn btn-primary" id="btnReturnToList"><i class="glyphicon glyphicon-list  glyphicon-white"></i> {{$SysLang.model.backtolist}}</button>
+                                        {{/if}}
                                     </div>
                                </div>
                             </div>
@@ -155,7 +168,14 @@
         $("#btnReturnToList").click(function(){
             self.location="{{$PageName}}";
         });
+        {{foreach from=$ModelData.fields.field item=rs}}
+        {{if $action!="add" and $rs.type=="grid"}}
+        var json_{{$rs.key}}={"parenturl":"{{$request_url_encode}}"};
+        $("#content_{{$rs.key}}").load("{{$rootpath}}/{{$rs.api}}{{$id}}",json_{{$rs.key}},function(data){
 
+        });
+        {{/if}}
+        {{/foreach}}
     });
 
     function save(){
@@ -167,10 +187,12 @@
         var json={action:"save"
         ,"primary_id":"{{$id}}"
         {{foreach from=$ModelData.fields.field item=rs}}
-        {{if $rs.type=="check"}}
-        ,"{{$rs.key}}":$("#content_{{$rs.key}}").prop("checked")?"Y":"N"
-        {{else}}
-        ,"{{$rs.key}}":$("#content_{{$rs.key}}").val()=="no-value"?"":$("#content_{{$rs.key}}").val()
+        {{if $rs.type!="grid"}}
+            {{if $rs.type=="check"}}
+            ,"{{$rs.key}}":$("#content_{{$rs.key}}").prop("checked")?"Y":"N"
+            {{else}}
+            ,"{{$rs.key}}":$("#content_{{$rs.key}}").val()=="no-value"?"":$("#content_{{$rs.key}}").val()
+            {{/if}}
         {{/if}}
         {{/foreach}}
         };
@@ -185,7 +207,9 @@
                 if(data.substring(0,5)=="right"){
                     id=data.substring(5,data.length);
                     infoDialog("{{$SysLang.model.savesuccess}}");
-                    {{if $action=="add"}}
+                    {{if $parenturl!=""}}
+                    self.location='{{$parenturl}}';
+                    {{elseif $action=="add"}}
                     self.location='{{$PageName}}?action=edit&id='+id;
                     {{/if}}
                 }else{
@@ -199,7 +223,6 @@
     function saveValidate() {
 
         var message="";
-
         {{foreach from=$ModelData.fields.field item=rs}}
         {{if $rs.notnull=="1" }}
             {{if $rs.type=="fkey"}}

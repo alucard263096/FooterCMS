@@ -15,6 +15,10 @@
 
 	$model->ShowSearchResult($dbmgr,$smarty,$_REQUEST);
 
+  }else if($action=="getgrid"){
+
+	$model->ShowGridResult($dbmgr,$smarty,$_REQUEST,$_REQUEST["parenturl"]);
+
   }else if($action=="add"){
 
 	$smarty->assign("MyMenuId","product_add");

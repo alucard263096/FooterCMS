@@ -1,7 +1,7 @@
 <?php
 
 //lang init
-if(isset($_SESSION[SESSIONNAME]["Lang"])){
+if(1!=1&&isset($_SESSION[SESSIONNAME]["Lang"])){
 	$SysLang=$_SESSION[SESSIONNAME]["Lang"];
 }else{
 $path=ROOT."/lang/".$CONFIG["lang"].".xml";

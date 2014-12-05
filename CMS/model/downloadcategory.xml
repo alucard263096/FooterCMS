@@ -39,6 +39,13 @@
       <search>1</search>
       <notnull>1</notnull>
     </field>
+    <field>
+      <name>下载</name>
+      <key>downloadlist</key>
+      <type>grid</type>
+      <api>Content/download.php?action=getgrid&amp;category_id=</api>
+      <newitemurl>Content/download.php?action=add</newitemurl>
+    </field>
   </fields>
   <options>
     <option>

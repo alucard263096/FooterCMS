@@ -25,6 +25,7 @@
     <viewupload>View Upload</viewupload>
     <save>Save</save>
     <savesuccess>Saved successfully</savesuccess>
+    <back>Back</back>
     <backtolist>Back to List</backtolist>
     <pleaseenter>Please enter or select </pleaseenter>
     <uploaderror>Upload failed, please contact administrator </uploaderror>

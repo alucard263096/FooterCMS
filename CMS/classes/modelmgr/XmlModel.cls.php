@@ -60,8 +60,7 @@ class XmlModel
 	return $result;
   }
 
-
-  public function ShowSearchResult($dbMgr,$smartyMgr,$request){
+  public function GetSearchSql($request){
 	$sql="select r_main.id";
 	$fields=$this->XmlData["fields"]["field"];
 	foreach ($fields as $value){
@@ -145,8 +144,14 @@ class XmlModel
 
 	$sql=$sql." order by r_main.updated_date desc ";
 
+	return $sql;
+  }
 
+
+  public function ShowSearchResult($dbMgr,$smartyMgr,$request){
 	
+	$sql=$this->GetSearchSql($request);
+
 	$query = $dbMgr->query($sql);
 	$result = $dbMgr->fetch_array_all($query); 
 	
@@ -154,6 +159,20 @@ class XmlModel
     $smartyMgr->assign("PageName",$this->PageName);
     $smartyMgr->assign("result",$result);
     $smartyMgr->display(ROOT.'/templates/model/result.html');
+
+  }
+  public function ShowGridResult($dbMgr,$smartyMgr,$request,$parenturl){
+	
+	$sql=$this->GetSearchSql($request);
+
+	$query = $dbMgr->query($sql);
+	$result = $dbMgr->fetch_array_all($query); 
+	
+    $smartyMgr->assign("ModelData",$this->XmlData);
+    $smartyMgr->assign("PageName",$this->PageName);
+    $smartyMgr->assign("parenturl",$parenturl);
+    $smartyMgr->assign("result",$result);
+    $smartyMgr->display(ROOT.'/templates/model/grid.html');
 
   }
 
@@ -206,11 +225,19 @@ class XmlModel
 		$sql="insert into ".$this->XmlData["tablename"]." (id";
 		$fields=$this->XmlData["fields"]["field"];
 		foreach ($fields as $value){
+			if($value["type"]=="grid"){
+				continue;
+			}
 			$sql=$sql.",`".$value["key"]."`";
 		}
 		$sql=$sql.",created_date,created_user,updated_date,updated_user ) values (";
 		$sql=$sql.$id;
 		foreach ($fields as $value){
+		
+			if($value["type"]=="grid"){
+				continue;
+			}
+
 			if($value["type"]=="password"){
 				$sql=$sql.",'".md5($request[$value["key"]])."'";
 			}else{
@@ -225,9 +252,12 @@ class XmlModel
 		$sql="update ".$this->XmlData["tablename"]." set updated_date=now(),updated_user=$sysuser";
 		$fields=$this->XmlData["fields"]["field"];
 		foreach ($fields as $value){
-			if($value["type"]!="password"){
-				$sql=$sql.", `".$value["key"]."`='".mysql_real_escape_string($request[$value["key"]])."'";
+		
+			if($value["type"]=="grid"
+			||$value["type"]=="password"){
+				continue;
 			}
+			$sql=$sql.", `".$value["key"]."`='".mysql_real_escape_string($request[$value["key"]])."'";
 		}
 		$sql=$sql." where id=$id";
 		$query = $dbMgr->query($sql);

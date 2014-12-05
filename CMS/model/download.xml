@@ -38,7 +38,6 @@
       <name>外部下载链接</name>
       <key>extlink</key>
       <type>longtext</type>
-      <notnull>1</notnull>
     </field>
     <field>
       <name>下载文件</name>
