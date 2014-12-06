@@ -3,11 +3,32 @@
   <name>Category Example</name>
   <tablename>tb_test_category</tablename>
   <searchcondition>r_main.status&lt;&gt;'D'</searchcondition>
+  <ismutillang>1</ismutillang>
   <fields>
     <field>
       <name>Name</name>
       <key>name</key>
       <type>text</type>
+      <displayinlist>1</displayinlist>
+      <gotodetail>1</gotodetail>
+      <search>1</search>
+      <notnull>1</notnull>
+    </field>
+    <field>
+      <name>Language Name</name>
+      <key>langname</key>
+      <type>text</type>
+      <ismutillang>1</ismutillang>
+      <displayinlist>1</displayinlist>
+      <gotodetail>1</gotodetail>
+      <search>1</search>
+      <notnull>1</notnull>
+    </field>
+    <field>
+      <name>Language Summary</name>
+      <key>langsummary</key>
+      <type>longtext</type>
+      <ismutillang>1</ismutillang>
       <displayinlist>1</displayinlist>
       <gotodetail>1</gotodetail>
       <search>1</search>
@@ -30,6 +51,13 @@
       </options>
       <search>1</search>
       <notnull>1</notnull>
+    </field>
+    <field>
+      <name>Test</name>
+      <key>testlist</key>
+      <type>grid</type>
+      <api>Example/test.php?action=getgrid&amp;cate_id=</api>
+      <newitemurl>Example/test.php?action=add</newitemurl>
     </field>
   </fields>
   <options>

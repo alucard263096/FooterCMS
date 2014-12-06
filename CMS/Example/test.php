@@ -5,19 +5,23 @@
 
   $action=$_REQUEST["action"];
   $model=new TestXmlModel("test.php");
+
+	$smarty->assign("MyModule","content");
+
   if($action==""){
-	$smarty->assign("MyModule","test");
 	$smarty->assign("MyMenuId","test_list");
 	$model->ShowList($dbmgr,$smarty);
 
   }else if($action=="search"){
 	$model->ShowSearchResult($dbmgr,$smarty,$_REQUEST);
+  }else if($action=="getgrid"){
+
+	$model->ShowGridResult($dbmgr,$smarty,$_REQUEST,$_REQUEST["parenturl"]);
+
   }else if($action=="add"){
-	$smarty->assign("MyModule","test");
 	$smarty->assign("MyMenuId","test_add");
 	$model->Add($dbmgr,$smarty);
   }else if($action=="edit"){
-	$smarty->assign("MyModule","test");
 	$smarty->assign("MyMenuId","test_add");
 	$model->Edit($dbmgr,$smarty,$_REQUEST["id"]);
   }else if($action=="save"){

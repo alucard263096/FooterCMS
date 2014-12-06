@@ -29,7 +29,8 @@
     <backtolist>Back to List</backtolist>
     <pleaseenter>Please enter or select </pleaseenter>
     <uploaderror>Upload failed, please contact administrator </uploaderror>
-  </model>
+    <updateotherlang>Updte other language</updateotherlang>
+</model>
   <common>
     <login>Login</login>
     <loginname>Login Name</loginname>
