@@ -29,6 +29,8 @@ class XmlModel
     //$searchField=$this->XmlData["fields"];
 	//print_r($this->XmlData);
 	$dataWithFKey=$this->loadFKeyValue($dbMgr,$this->XmlData);
+
+	$this->GetFListData($dbMgr,$smartyMgr);
     $smartyMgr->assign("ModelData",$dataWithFKey);
     $smartyMgr->assign("PageName",$this->PageName);
     $smartyMgr->display(ROOT.'/templates/model/list.html');
@@ -173,18 +175,39 @@ class XmlModel
 	return $sql;
   }
 
-  public function GetFListData(){
+  public function GetFListData($dbMgr,$smartyMgr){
+	Global $CONFIG;
+
+	$Array=Array();
+	$fields=$this->XmlData["fields"]["field"];
+	foreach ($fields as $value){
+		if($value["type"]=="flist"){
+			//ismutillang
+			$tablename=$value["tablename"];
+			$tablerename=$value["ntbname"];
+			$displayfield=$value["displayfield"];
+			$condition=$value["condition"];
+			$ismutillang=$value["ismutillang"];
+
+			$arrayvalue=$this->GetFKeyData($dbMgr,$displayfield,$tablename,$tablerename,$condition,$ismutillang);
+			
+			$Arr=Array();
+			$Arr["key"]=$value["key"];
+			$Arr["value"]=$arrayvalue;
+			$Array[]=$Arr;
+		}
+	}
 	
+    $smartyMgr->assign("FListArr",$Array);
   }
 
 
   public function ShowSearchResult($dbMgr,$smartyMgr,$request){
 	
 	$sql=$this->GetSearchSql($request);
-
 	$query = $dbMgr->query($sql);
 	$result = $dbMgr->fetch_array_all($query); 
-	
+
     $smartyMgr->assign("ModelData",$this->XmlData);
     $smartyMgr->assign("PageName",$this->PageName);
     $smartyMgr->assign("result",$result);
@@ -198,6 +221,7 @@ class XmlModel
 	$query = $dbMgr->query($sql);
 	$result = $dbMgr->fetch_array_all($query); 
 	
+	$this->GetFListData($dbMgr,$smartyMgr);
     $smartyMgr->assign("ModelData",$this->XmlData);
     $smartyMgr->assign("PageName",$this->PageName);
     $smartyMgr->assign("parenturl",$parenturl);
@@ -209,6 +233,8 @@ class XmlModel
   
   public function Add($dbMgr,$smartyMgr){
    $dataWithFKey=$this->loadFKeyValue($dbMgr,$this->XmlData);
+
+	$this->GetFListData($dbMgr,$smartyMgr);
     $smartyMgr->assign("ModelData",$dataWithFKey);
     $smartyMgr->assign("PageName",$this->PageName);
     $smartyMgr->assign("action","add");
@@ -228,6 +254,8 @@ class XmlModel
 
 	$XmlDataWithInfo=$this->assignWithInfo($this->XmlData,$result,$langresult);
     $dataWithFKey=$this->loadFKeyValue($dbMgr,$XmlDataWithInfo);
+	
+	$this->GetFListData($dbMgr,$smartyMgr);
 
     $smartyMgr->assign("ModelData",$dataWithFKey);
     $smartyMgr->assign("PageName",$this->PageName);

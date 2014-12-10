@@ -29,6 +29,17 @@
       <condition>r_cate.status='A'</condition>
     </field>
     <field>
+      <name>Dowload List</name>
+      <key>download_list_id</key>
+      <type>flist</type>
+      <displayfield>name</displayfield>
+      <displayinlist>1</displayinlist>
+      <notnull>1</notnull>
+      <tablename>tb_download_file</tablename>
+      <ntbname>r_download</ntbname>
+      <condition>r_download.status='A'</condition>
+    </field>
+    <field>
       <name>Name</name>
       <key>name</key>
       <type>text</type>
