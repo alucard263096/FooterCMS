@@ -250,7 +250,7 @@ class XmlModel
 
     $sql="";
 	$dbMgr->begin_trans();
-
+	$haveMutilLang=false;
 	if($request["primary_id"]==""){
 	
 		$sql="select ifnull(max(id),0)+1 from ".$this->XmlData["tablename"];
@@ -290,25 +290,7 @@ class XmlModel
 		}
 		$sql=$sql.",now(),$sysuser,now(),$sysuser )";
 		$query = $dbMgr->query($sql);
-		if($haveMutilLang){
-			foreach ($SysLangConfig["langs"]["lang"] as $lang){
-				$sql="insert into ".$this->XmlData["tablename"]."_lang (oid,lang";
-				$fields=$this->XmlData["fields"]["field"];
-				foreach ($fields as $value){
-					if($value["ismutillang"]=="1"){
-					$sql=$sql.",`".$value["key"]."`";
-					}
-				}
-				$sql=$sql." ) values ( $id ,'".$lang["code"]."' ";
-				foreach ($fields as $value){
-					if($value["ismutillang"]=="1"){
-						$sql=$sql.",'".mysql_real_escape_string($request[$value["key"]."_".$lang["code"]])."'";
-					}
-				}
-				$sql=$sql." )";
-				$query = $dbMgr->query($sql);
-			}
-		}
+		
 	}else{
 		$haveMutilLang=false;
 		$id=$request["primary_id"];
@@ -349,7 +331,28 @@ class XmlModel
 			}
 		}
 	}
-	
+
+	if($haveMutilLang){
+			$sql="delete from ".$this->XmlData["tablename"]."_lang where oid=$id ";
+				$query = $dbMgr->query($sql);
+			foreach ($SysLangConfig["langs"]["lang"] as $lang){
+				$sql="insert into ".$this->XmlData["tablename"]."_lang (oid,lang";
+				$fields=$this->XmlData["fields"]["field"];
+				foreach ($fields as $value){
+					if($value["ismutillang"]=="1"){
+					$sql=$sql.",`".$value["key"]."`";
+					}
+				}
+				$sql=$sql." ) values ( $id ,'".$lang["code"]."' ";
+				foreach ($fields as $value){
+					if($value["ismutillang"]=="1"){
+						$sql=$sql.",'".mysql_real_escape_string($request[$value["key"]."_".$lang["code"]])."'";
+					}
+				}
+				$sql=$sql." )";
+				$query = $dbMgr->query($sql);
+			}
+		}
 
 	$dbMgr->commit_trans();
 	return "right".$id;
