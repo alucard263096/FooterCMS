@@ -43,7 +43,7 @@ class XmlModel
 	for($i=0;$i<$count;$i++){
 		if($fields[$i]["type"]=="fkey"
 		&&$fields[$i]["search"]=="1"){
-			$options=$this->GetFKeyData($dbMgr,$fields[$i]["displayfield"],$fields[$i]["tablename"],$fields[$i]["ntbname"],$fields[$i]["condition"],$fields[$i]["ismutillang"]);
+			$options=$this->GetFKeyData($dbMgr,$fields[$i]["displayfield"],$fields[$i]["tablename"],$fields[$i]["ntbname"],$fields[$i]["condition"],$fields[$i]["fmutillang"]);
 			$fields[$i]["options"]=$options;
 		}
 	}
@@ -118,7 +118,7 @@ class XmlModel
 	foreach ($fields as $value){
 		if($value["displayinlist"]=="1"){
 			if($value["type"]=="fkey"){
-				if($value["ismutillang"]=="1"){
+				if($value["fmutillang"]=="1"){
 					$subsql=$this->GetLangTableSql($value["tablename"],$value["ntbname"]);
 					$sql=$sql." left join $subsql on r_main.".$value["key"]."=".$value["ntbname"].".id ";
 				}else{
@@ -187,7 +187,7 @@ class XmlModel
 			$tablerename=$value["ntbname"];
 			$displayfield=$value["displayfield"];
 			$condition=$value["condition"];
-			$ismutillang=$value["ismutillang"];
+			$ismutillang=$value["fmutillang"];
 
 			$arrayvalue=$this->GetFKeyData($dbMgr,$displayfield,$tablename,$tablerename,$condition,$ismutillang);
 			
@@ -247,10 +247,11 @@ class XmlModel
 	$query = $dbMgr->query($sql);
 	$result = $dbMgr->fetch_array($query); 
 
+	if($this->XmlData["ismutillang"]=="1"){
 	$sql="select * from ".$this->XmlData["tablename"]."_lang where oid=$id";
 	$query = $dbMgr->query($sql);
 	$langresult = $dbMgr->fetch_array_all($query); 
-
+	}
 
 	$XmlDataWithInfo=$this->assignWithInfo($this->XmlData,$result,$langresult);
     $dataWithFKey=$this->loadFKeyValue($dbMgr,$XmlDataWithInfo);
@@ -288,7 +289,7 @@ class XmlModel
   }
   public function Save($dbMgr,$request,$sysuser){
 	Global $SysLangConfig;
-
+	//print_r($request);
     $sql="";
 	$dbMgr->begin_trans();
 	$haveMutilLang=false;
@@ -319,7 +320,7 @@ class XmlModel
 			
 			
 			if($value["type"]=="grid"
-			||$value["ismutillang"]=="1"){
+			||$value["ismutillang"]){
 				continue;
 			}
 

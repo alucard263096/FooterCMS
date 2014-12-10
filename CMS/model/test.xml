@@ -23,7 +23,7 @@
       <gotodetail>1</gotodetail>
       <search>1</search>
       <notnull>1</notnull>
-      <ismutillang>1</ismutillang>
+      <fmutillang>1</fmutillang>
       <tablename>tb_test_category</tablename>
       <ntbname>r_cate</ntbname>
       <condition>r_cate.status='A'</condition>
