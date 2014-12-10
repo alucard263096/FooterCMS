@@ -18,11 +18,12 @@
       <name>Category</name>
       <key>cate_id</key>
       <type>fkey</type>
-      <displayfield>name</displayfield>
+      <displayfield>langname</displayfield>
       <displayinlist>1</displayinlist>
       <gotodetail>1</gotodetail>
       <search>1</search>
       <notnull>1</notnull>
+      <ismutillang>1</ismutillang>
       <tablename>tb_test_category</tablename>
       <ntbname>r_cate</ntbname>
       <condition>r_cate.status='A'</condition>

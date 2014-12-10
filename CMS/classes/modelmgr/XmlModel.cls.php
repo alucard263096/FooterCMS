@@ -53,7 +53,8 @@ class XmlModel
   private function GetFKeyData($dbMgr,$displayfield,$tablename,$tablerename,$condition,$ismutillang){
 	Global $CONFIG;
 	if($ismutillang=="1"){
-		$sql="select oid id,$displayfield as name from $tablename"."_lang as $tablerename where lang='".$CONFIG["lang"]."' and $condition";
+		$subsql=$this->GetLangTableSql($tablename,$tablerename);
+		$sql="select oid id,$displayfield as name from $subsql where $condition ";
 	}else{
 		$sql="select id,$displayfield as name from $tablename as $tablerename where $condition";
 	}
@@ -61,6 +62,14 @@ class XmlModel
 	$result = $dbMgr->fetch_array_all($query); 
 
 	return $result;
+  }
+
+  public function GetLangTableSql($tablename,$tablenickname){
+	Global $CONFIG;
+	$subsql="  (select * from $tablename ".$tablenickname."_a 
+							left join ".$tablename."_lang ".$tablenickname."_b 
+							on ".$tablenickname."_a.id=".$tablenickname."_b.oid and ".$tablenickname."_b.lang='".$CONFIG["lang"]."'  ) $tablenickname ";
+	return $subsql;
   }
 
   public function GetSearchSql($request){
@@ -98,9 +107,8 @@ class XmlModel
 	
 	//$sql=$sql." from ".$this->XmlData["tablename"]." as r_main ";
 	if($this->XmlData["ismutillang"]=="1"){
-		$sql=$sql." from (select * from ".$this->XmlData["tablename"]." r_main_a 
-							inner join ".$this->XmlData["tablename"]."_lang r_main_b 
-							on r_main_a.id=r_main_b.oid and r_main_b.lang='".$CONFIG["lang"]."'  ) r_main ";
+		$subsql=$this->GetLangTableSql($this->XmlData["tablename"],"r_main");
+		$sql=$sql." from $subsql ";
 	}else{
 		$sql=$sql." from ".$this->XmlData["tablename"]." as r_main ";
 	}
@@ -109,7 +117,8 @@ class XmlModel
 		if($value["displayinlist"]=="1"){
 			if($value["type"]=="fkey"){
 				if($value["ismutillang"]=="1"){
-					$sql=$sql." left join ".$value["tablename"]."_lang ".$value["ntbname"]." on ".$value["ntbname"].".lang='".$CONFIG["lang"]."' and  r_main.".$value["key"]."=".$value["ntbname"].".oid ";
+					$subsql=$this->GetLangTableSql($value["tablename"],$value["ntbname"]);
+					$sql=$sql." left join $subsql on r_main.".$value["key"]."=".$value["ntbname"].".id ";
 				}else{
 				
 					$sql=$sql." left join ".$value["tablename"]." ".$value["ntbname"]." on r_main.".$value["key"]."=".$value["ntbname"].".id ";
@@ -162,6 +171,10 @@ class XmlModel
 	$sql=$sql." order by r_main.updated_date desc ";
 
 	return $sql;
+  }
+
+  public function GetFListData(){
+	
   }
 
 
