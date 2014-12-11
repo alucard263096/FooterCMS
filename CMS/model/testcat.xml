@@ -57,7 +57,7 @@
       <key>testlist</key>
       <type>grid</type>
       <api>Example/test.php?action=getgrid&amp;cate_id=</api>
-      <newitemurl>Example/test.php?action=add</newitemurl>
+      <newitemurl>Example/test.php?action=add&amp;key=cate_id&amp;id=</newitemurl>
     </field>
   </fields>
   <options>
