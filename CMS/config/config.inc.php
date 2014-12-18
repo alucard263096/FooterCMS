@@ -8,6 +8,7 @@ $CONFIG['URL']="http://localhost/FooterCMS/CMS";
 $CONFIG['lang']="zh-cn";//en-us
 $CONFIG["frontendurl"]="http://localhost/FooterCMS/";
 $CONFIG["SessionName"]="FooterCMS";
+$CONFIG["SupportMultiLanguage"]=true;
 
 $CONFIG['smarty']['rootpath']		= '/FooterCMS/CMS'; 
 $CONFIG['solution_configuration']='debug';

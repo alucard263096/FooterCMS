@@ -74,5 +74,19 @@ $item["list"]=$list;
 return json_encode($item);
 }
 
+function ResetNameWithLang($arr,$lang){
+	
+	if(isset($arr["name"])&&isset($arr["name_".$lang])){
+		$arr["name"]=$arr["name_".$lang]."aaa";
+	}
+
+	foreach ($arr as $key => $value){
+		if(is_array($arr[$key])){
+			$arr[$key]=ResetNameWithLang($arr[$key],$lang);
+		}
+	}
+	return $arr;
+
+}
 
 ?>

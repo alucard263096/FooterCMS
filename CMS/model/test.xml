@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
   <name>Test Example</name>
+  <name_zh-cn>测试实例</name_zh-cn>
   <tablename>tb_test</tablename>
   <nolist>0</nolist>
   <searchcondition>r_main.status&lt;&gt;'D'</searchcondition>
   <fields>
     <field>
       <name>Seq</name>
+      <name_zh-cn>序号</name_zh-cn>
       <key>seq</key>
       <type>number</type>
       <displayinlist>1</displayinlist>
@@ -104,6 +106,7 @@
   <options>
     <option>
       <name>新增</name>
+      <name_zh-cn>New</name_zh-cn>
       <type>function</type>
       <function>addNew()</function>
       <search>1</search>

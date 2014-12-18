@@ -7,8 +7,13 @@ class XmlModel
   private $PageName;
 
   public function __construct($name,$pagename){
-      $xmlstr=$this->loadXmlFile($name);
+      GLOBAL $CONFIG,$SysLangCode;
+
+	  $xmlstr=$this->loadXmlFile($name);
       $this->XmlData=$this->xmlToArray($xmlstr);
+	  if($CONFIG["SupportMultiLanguage"]==true){
+		$this->XmlData=ResetNameWithLang($this->XmlData,$SysLangCode);
+	  }
 	  $this->PageName=$pagename;
   }
 

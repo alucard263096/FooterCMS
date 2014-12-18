@@ -31,7 +31,9 @@
 			$smarty->assign("ErrorMsg",$SysLang["index"]["incorrectpsw"]);
 		}else{
 			$_SESSION[SESSIONNAME]["SysUser"]=$user;
-			
+			if($_REQUEST["language"]!=""){
+				$_SESSION[SESSIONNAME]["LangCode"]=$_REQUEST["language"];
+			}
 			WindowRedirect($CONFIG['smarty']['rootpath']."/Admin/about.php");
 			exit();
 		}

@@ -27,6 +27,9 @@ $path=ROOT."/model/menu.xml";
 $fp = fopen($path,"r");
 $str = fread($fp,filesize($path));
 $MenuArray=json_decode(json_encode((array) simplexml_load_string($str)), true);
+ if($CONFIG["SupportMultiLanguage"]==true){
+		$MenuArray=ResetNameWithLang($MenuArray,$SysLangCode);
+	  }
 $_SESSION[SESSIONNAME]["SystemMenu"]=$MenuArray;
 }
 

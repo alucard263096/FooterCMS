@@ -4,10 +4,12 @@
     <mainmenu>
       <module>admin</module>
       <name>系统管理</name>
+      <name_zh-cn>系统管理SysAdmin</name_zh-cn>
       <submenus>
         <submenu>
           <id>about</id>
           <name>关于</name>
+          <name_zh-cn>关于Aboutus</name_zh-cn>
           <url>/Admin/about.php</url>
         </submenu>
         <!--<submenu>
