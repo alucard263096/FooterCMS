@@ -139,7 +139,7 @@
                                                 <select {{if $action!="add" and $rs.disableindetail=="1"}}disabled="disabled"{{/if}}  id="content_{{$rs.key}}" class="form-control selectize-select">
                                                     <option value="no-value">--{{$SysLang.model.select}}--</option>
                                                     {{foreach from=$rs.options.option item=rsoption}}
-                                                    <option {{if $rs.value==$rsoption.value}}selected{{/if}} value="{{$rsoption.value}}">{{$rsoption.name}}</option>
+                                                <option {{if $rs.value==$rsoption.value or ($action=="add" and $rsoption.default=='1' )}}selected{{/if}} value="{{$rsoption.value}}">{{$rsoption.name}}</option>
                                                     {{/foreach}}
                                                 </select>
                                             </div>
