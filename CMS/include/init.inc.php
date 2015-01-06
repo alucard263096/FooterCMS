@@ -38,4 +38,9 @@ if($smarty!=null){
 	$smarty->assign("SysUser",$SysUser);
 }
 
+
+
+include ROOT.'/classes/datamgr/business.cls.php';
+$SysReminder=$businessMgr->getReminderCount($SysUser["id"]);
+$smarty->assign("SysReminder",$SysReminder);
 ?>

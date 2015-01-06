@@ -12,11 +12,11 @@
           <name_zh-cn>关于Aboutus</name_zh-cn>
           <url>/Admin/about.php</url>
         </submenu>
-        <!--<submenu>
+        <submenu>
           <id>dashboard</id>
           <name>Dashboard</name>
           <url>/Admin/dashboard.php</url>
-        </submenu>-->
+        </submenu>
         <submenu>
           <id>user_list</id>
           <name>用户列表</name>
