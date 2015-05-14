@@ -11,11 +11,11 @@
                                     {{if $rs.detail=="1"}}
                                         {{if $rs.type=="link"}}    
                                     <a href="{{$rs.link}}" class="action">
-                                        <button class="btn btn-success">{{$rs.name}}</button>
+                                        <button {{if $rs.id!=""}}id="{{$rs.id}}"{{/if}} class="btn btn-success">{{$rs.name}}</button>
                                     </a>
                                         {{elseif $rs.type=="function"}}
                                     <a href="javascript:{{$rs.function}}" class="action">
-                                        <button class="btn btn-success">{{$rs.name}}</button>
+                                        <button {{if $rs.id!=""}}id="{{$rs.id}}"{{/if}} class="btn btn-success">{{$rs.name}}</button>
                                     </a>
                                         {{/if}}                                 
                                     {{/if}} 
@@ -121,7 +121,7 @@
                                         {{elseif $rs.type=="flist"}}
                                         <div class="form-group col-md-12">
                                             <label class="col-md-2 control-label">
-                                                {{$rs.name}}
+                                            {{$rs.name}}
                                                 <input class="uniform_on multicheckbox flist_all" type="checkbox" ref="flist_{{$rs.key}}" />
                                             </label>
                                             <div class="col-md-10">
@@ -214,6 +214,7 @@
                 $("."+fck).parent().removeClass("checked");
             }
         });
+
         $('input[type="checkbox"],[type="radio"]').not('#create-switch').not('.multicheckbox').bootstrapSwitch();
         $('#btnSave').click(save);
         $("#btnReturnToList").click(function(){
