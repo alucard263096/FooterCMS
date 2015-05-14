@@ -162,6 +162,8 @@
                                     </div>
                                     <hr />
                                     <div class="text-center">
+										
+                                        <input type="hidden" id="content_id" value="{{$id}}" />
                                         <button class="btn btn-primary" id="btnSave"><i class="glyphicon glyphicon-pencil  glyphicon-white"></i> {{$SysLang.model.save}}</button>
                                         {{if $parenturl!=""}}
                                         <button class="btn btn-primary" onclick="window.location.href='{{$parenturl}}';"><i class="glyphicon glyphicon-list  glyphicon-white"></i> {{$SysLang.model.back}}</button>
