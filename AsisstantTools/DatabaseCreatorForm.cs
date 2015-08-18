@@ -42,6 +42,7 @@ namespace AsisstantTools
             matchValueType.Add("check", "varchar(1)");
             matchValueType.Add("fkey", "int");
             matchValueType.Add("grid", "");
+            matchValueType.Add("password", "nvarchar(100)");
 
         }
 
