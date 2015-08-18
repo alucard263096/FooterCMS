@@ -38,6 +38,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MySql.Data.6.9.7\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="SunStar.DataBaseFactory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\SunStar.DataBaseFactory.dll</HintPath>
+    </Reference>
+    <Reference Include="SunStar.EnumSolid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dlls\SunStar.EnumSolid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -63,24 +71,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyControls\DatabaseServerConnectionControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MyControls\DatabaseServerConnectionControl.Designer.cs">
-      <DependentUpon>DatabaseServerConnectionControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MyControls\MysqlConnectionControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MyControls\MysqlConnectionControl.Designer.cs">
-      <DependentUpon>MysqlConnectionControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MyControls\SqlserverConnectionControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MyControls\SqlserverConnectionControl.Designer.cs">
-      <DependentUpon>SqlserverConnectionControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DatabaseCreatorForm.resx">
@@ -88,9 +78,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MyControls\DatabaseServerConnectionControl.resx">
-      <DependentUpon>DatabaseServerConnectionControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -117,6 +104,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dlls\SunStar.DataBaseFactory.dll" />
+    <Content Include="dlls\SunStar.EnumSolid.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
