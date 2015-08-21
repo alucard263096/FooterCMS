@@ -10,7 +10,7 @@ class GeneralTextXmlModel extends XmlModel{
 	Global $SysLang; 
 		if($request["primary_id"]==""){
 			$key=$request["key"];
-			$loginname=mysql_real_escape_string($key);
+			$loginname=parameter_filter($key);
 			$sql="select * from tb_general where `key`='$key' ";
 			$query = $dbMgr->query($sql);
 			$userRows = $dbMgr->fetch_array_all($query); 

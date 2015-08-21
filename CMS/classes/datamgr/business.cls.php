@@ -43,7 +43,7 @@
 
 		//$arr=Array();
 		//$arr["name"]="疫苗预约取消";
-		//$user_id=mysql_real_escape_string($user_id);
+		//$user_id=parameter_filter($user_id);
 		//$sql="select  m.id,m.name as first,
  //m.mobile  as second,m.order_date  as third 
 //from dr_tb_member_vaccine_order m
