@@ -41,7 +41,7 @@
 			return "current_password_diff";
 		}
 		
-		$sql="update tb_user set password='$new_password',updated_user=$user_id,updated_date=now() where user_id=$user_id";
+		$sql="update tb_user set password='$new_password',updated_user=$user_id,updated_date=".$dbMgr->getDate()." where user_id=$user_id";
 		$query = $this->dbmgr->query($sql);
 		
 		return "success";
@@ -51,7 +51,7 @@
 	{
 		$password=parameter_filter($password);
 		
-		$sql="update tb_user set password='$password',updated_user=$sysUser_id,updated_date=now() where user_id=$user_id";
+		$sql="update tb_user set password='$password',updated_user=$sysUser_id,updated_date=".$dbMgr->getDate()." where user_id=$user_id";
 		$query = $this->dbmgr->query($sql);
 	}
 	
