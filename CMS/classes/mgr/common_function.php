@@ -90,4 +90,53 @@ function ResetNameWithLang($arr,$lang){
 
 }
 
+function outputXml($result){
+header("Content-type: text/xml");
+  $str="<?xml version=\"1.0\" encoding=\"utf-8\" ?><table>";
+  $row_count=count($result);
+  for($i=0;$i<$row_count;$i++){
+	$str.="<row>";
+	$j=0;
+	foreach($result[$i] as $key => $value){
+		if($j%2==1){ 
+			//echo "~".$value."!";
+			if($value instanceof DateTime){
+				$value= $value->format('Y-m-d H:i:s');
+			}
+
+			$value_change = array('&'=>'&amp;'
+			,'#'=>'&#35;'
+			,'<'=>'&lt;'
+			,chr(0x0)=>''
+			,'>'=>'&gt;'
+			,'\''=>'&apos;'
+			,'"'=>'&quot;');
+			$value = utf8_for_xml($value);
+			$str.="<$key>".strtr($value,$value_change)."</$key>";
+		}
+		$j++;
+	}
+	$str.="</row>";
+  }
+  $str.="</table>";
+  echo $str;
+  exit;
+}
+function utf8_for_xml($string)
+{
+    $ret= preg_replace ('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $string);
+	return $ret;
+}
+function outResult($num,$message,$return=""){
+	$array=Array();
+	$arr=Array();
+	$arr[0]=$num;
+	$arr["id"]=$num;
+	$arr[1]=$message;
+	$arr["result"]=$message;
+	$arr[2]=$return;
+	$arr["return"]=$return;
+	$array[]=$arr;
+	return $array;
+}
 ?>

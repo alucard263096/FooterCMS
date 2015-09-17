@@ -437,6 +437,44 @@ class XmlModel
 		echo $result;
 	  }
 
+ }
+
+ 
+  public function ShowAPIList($dbMgr){
+  
+    $sql=$this->GetSearchSql($request);
+	$query = $dbMgr->query($sql);
+	$result = $dbMgr->fetch_array_all($query); 
+
+	outputXml($result);
+  }
+  public function DetailApi($dbMgr,$id,$lang){
+	if($this->XmlData["ismutillang"]=="1"){
+		$sql="select * from ".$this->XmlData["tablename"]." m
+		inner join ".$this->XmlData["tablename"]."_lang ml on m.id=ml.oid and code='$lang' where id=$id";
+		$query = $dbMgr->query($sql);
+		$result = $dbMgr->fetch_array_all($query);
+	}else{
+		$sql="select * from ".$this->XmlData["tablename"]." where id=$id";
+		$query = $dbMgr->query($sql);
+		$result = $dbMgr->fetch_array_all($query);
+	} 
+
+	outputXml($result);
+  }
+	  
+  public function DefaultShowAPI($dbmgr,$action,$request){
+	  if($action==""){
+		$this->ShowAPIList($dbmgr);
+	  }if($action=="detail"){
+		$this->DetailApi($dbmgr,$request["id"],$request["lang"]);
+	  }else if($action=="save"){
+		$result=$this->Save($dbmgr,$request,-1);
+		echo $result;
+	  }else if($action=="delete"){
+		$result=$this->Delete($dbmgr,$request["idlist"],-1);
+		echo $result;
+	  }
   }
 
 }
