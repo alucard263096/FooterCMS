@@ -209,7 +209,9 @@ class XmlModel
 	
 	$sql=$this->GetSearchSql($request);
 	$query = $dbMgr->query($sql);
-	$result = $dbMgr->fetch_array_all($query); 
+	$result = $dbMgr->fetch_array_all($query);
+
+	$result=ClearData($result);
 
     $smartyMgr->assign("ModelData",$this->XmlData);
     $smartyMgr->assign("PageName",$this->PageName);
@@ -217,11 +219,26 @@ class XmlModel
     $smartyMgr->display(ROOT.'/templates/model/result.html');
 
   }
+
+  public function ClearData($result){
+	$count=count($result);
+	for($i=0;$i<$count;$i++){
+		for($j=0;$j<count($result[$i]);$j++){
+			$value=$result[$i][$j];
+			if($value instanceof DateTime){
+				$result[$i][$j]= $value->format('Y-m-d H:i:s');
+			}
+		}
+	}
+	return $result;
+  }
+
   public function ShowGridResult($dbMgr,$smartyMgr,$request,$parenturl){
 	$sql=$this->GetSearchSql($request);
 
 	$query = $dbMgr->query($sql);
 	$result = $dbMgr->fetch_array_all($query); 
+	$result=ClearData($result);
 	
 	$this->GetFListData($dbMgr,$smartyMgr);
     $smartyMgr->assign("ModelData",$this->XmlData);
