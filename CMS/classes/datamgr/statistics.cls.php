@@ -5,13 +5,13 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */  
- class BusinessMgr
+ class StatisticsMgr
  {
  	private static $instance = null;
 	public static $dbmgr = null;
 	public static $webServiceClient = null;
 	public static function getInstance() {
-		return self :: $instance != null ? self :: $instance : new BusinessMgr();
+		return self :: $instance != null ? self :: $instance : new StatisticsMgr();
 	}
 
 	private function __construct() {
@@ -23,23 +23,30 @@
 		
 	}
 	
-	public function getReminderCount($user_id)
-	{
-		$sum=0;
-		
-		//$sql="select count(1) from dr_tb_member_vaccine_order where status='C' and h_status='P' ";
-		//$query = $this->dbmgr->query($sql);
-		//$result = $this->dbmgr->fetch_array($query); 
-		//$sum=$sum+ $result[0];
 
-		
-		
-		return $sum;
-	}
-
-	public function getReminderAll($user_id){
+	public function getDataForDashboard($user_id){
 		Global $CONFIG;
 		$Array=Array();
+
+		$arr=Array();
+		$arr["name"]="疫苗完成数量";
+		$arr["percent"]=34;
+		$arr["link"]=$CONFIG['rootpath']."/Appointment/appiontment.php";
+		$Array[]=$arr;
+
+		
+		$arr=Array();
+		$arr["name"]="疫苗检查数量";
+		$arr["percent"]=25;
+		$arr["link"]=$CONFIG['rootpath']."/Appointment/appiontment.php";
+		$Array[]=$arr;
+
+		
+		$arr=Array();
+		$arr["name"]="疫苗有效数量";
+		$arr["percent"]=45;
+		$arr["link"]=$CONFIG['rootpath']."/Appointment/appiontment.php";
+		$Array[]=$arr;
 
 		//$arr=Array();
 		//$arr["name"]="疫苗预约取消";
@@ -68,8 +75,8 @@
 	
  }
  
- $businessMgr=BusinessMgr::getInstance();
- $businessMgr->dbmgr=$dbmgr;
+ $statisticsMgr=StatisticsMgr::getInstance();
+ $statisticsMgr->dbmgr=$dbmgr;
  
  
  

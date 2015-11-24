@@ -143,20 +143,20 @@ class XmlModel
 
 				if($request[$value["key"]."_from"]!=""){
 
-					$sql=$sql." and r_main.".$value["key"].">='".mysql_real_escape_string($request[$value["key"]."_from"])."'";
+					$sql=$sql." and r_main.".$value["key"].">='".parameter_filter($request[$value["key"]."_from"])."'";
 
 				}
 
 				if($request[$value["key"]."_to"]!=""){
 
-					$sql=$sql." and r_main.".$value["key"]."<='".mysql_real_escape_string($request[$value["key"]."_to"])."'";
+					$sql=$sql." and r_main.".$value["key"]."<='".parameter_filter($request[$value["key"]."_to"])."'";
 
 				}
 
 			}else if($value["type"]=="fkey"){
 
 				if($request[$value["key"]]!="0"&&$request[$value["key"]]!=""){
-					$sql=$sql." and r_main.".$value["key"]."=".mysql_real_escape_string($request[$value["key"]])."";
+					$sql=$sql." and r_main.".$value["key"]."=".parameter_filter($request[$value["key"]])."";
 				}
 
 
@@ -164,7 +164,7 @@ class XmlModel
 				if($request[$value["key"]]!=""
 				&&$request[$value["key"]]!="no-value"){
 
-					$sql=$sql." and r_main.".$value["key"]." like '%".mysql_real_escape_string($request[$value["key"]])."%'";
+					$sql=$sql." and r_main.".$value["key"]." like '%".parameter_filter($request[$value["key"]])."%'";
 					
 				}
 			}
@@ -317,10 +317,7 @@ class XmlModel
 	$haveMutilLang=false;
 	if($request["primary_id"]==""){
 	
-		$sql="select ifnull(max(id),0)+1 from ".$this->XmlData["tablename"];
-		$query = $dbMgr->query($sql);
-		$result = $dbMgr->fetch_array($query); 
-		$id=$result[0];
+		$id=$dbMgr->getNewId($this->XmlData["tablename"]);
 
 		$haveMutilLang=false;
 
@@ -337,7 +334,7 @@ class XmlModel
 			if($value["nosave"]=="1"){
 				continue;
 			}
-			$sql=$sql.",`".$value["key"]."`";
+			$sql=$sql.",".$value["key"]."";
 		}
 		$sql=$sql.",created_date,created_user,updated_date,updated_user ) values (";
 		$sql=$sql.$id;
@@ -355,16 +352,16 @@ class XmlModel
 			if($value["type"]=="password"){
 				$sql=$sql.",'".md5($request[$value["key"]])."'";
 			}else{
-				$sql=$sql.",'".mysql_real_escape_string($request[$value["key"]])."'";
+				$sql=$sql.",'".parameter_filter($request[$value["key"]])."'";
 			}
 		}
-		$sql=$sql.",now(),$sysuser,now(),$sysuser )";
+		$sql=$sql.",".$dbMgr->getDate().",$sysuser,".$dbMgr->getDate().",$sysuser )";
 		$query = $dbMgr->query($sql);
 		
 	}else{
 		$haveMutilLang=false;
 		$id=$request["primary_id"];
-		$sql="update ".$this->XmlData["tablename"]." set updated_date=now(),updated_user=$sysuser";
+		$sql="update ".$this->XmlData["tablename"]." set updated_date=".$dbMgr->getDate().",updated_user=$sysuser";
 		$fields=$this->XmlData["fields"]["field"];
 		foreach ($fields as $value){
 			if($value["ismutillang"]=="1"){
@@ -378,7 +375,7 @@ class XmlModel
 			if($value["nosave"]=="1"){
 				continue;
 			}
-			$sql=$sql.", `".$value["key"]."`='".mysql_real_escape_string($request[$value["key"]])."'";
+			$sql=$sql.", ".$value["key"]."='".mysql_real_escape_string($request[$value["key"]])."'";
 		}
 		$sql=$sql." where id=$id";
 		$query = $dbMgr->query($sql);
@@ -386,8 +383,8 @@ class XmlModel
 		foreach ($fields as $value){
 			if($value["type"]=="password"){
 				$sql="update ".$this->XmlData["tablename"]." set ";
-				$sql=$sql." `".$value["key"]."`='".md5($request[$value["key"]])."'";
-				$sql=$sql." where id=$id and ".$value["key"]."<>'".mysql_real_escape_string($request[$value["key"]])."'";
+				$sql=$sql." ".$value["key"]."='".md5($request[$value["key"]])."'";
+				$sql=$sql." where id=$id and ".$value["key"]."<>'".parameter_filter($request[$value["key"]])."'";
 				$query = $dbMgr->query($sql);
 			}
 		}
@@ -396,7 +393,7 @@ class XmlModel
 				$sql="update ".$this->XmlData["tablename"]."_lang set lang='".$lang["code"]."'";
 				foreach ($fields as $value){
 					if($value["ismutillang"]=="1"){
-						$sql=$sql.", `".$value["key"]."`='".mysql_real_escape_string($request[$value["key"]."_".$lang["code"]])."'";
+						$sql=$sql.", ".$value["key"]."='".parameter_filter($request[$value["key"]."_".$lang["code"]])."'";
 					}
 				}
 				$sql=$sql." where oid=$id and lang='".$lang["code"]."'";
@@ -413,13 +410,13 @@ class XmlModel
 				$fields=$this->XmlData["fields"]["field"];
 				foreach ($fields as $value){
 					if($value["ismutillang"]=="1"){
-					$sql=$sql.",`".$value["key"]."`";
+					$sql=$sql.",".$value["key"]."";
 					}
 				}
 				$sql=$sql." ) values ( $id ,'".$lang["code"]."' ";
 				foreach ($fields as $value){
 					if($value["ismutillang"]=="1"){
-						$sql=$sql.",'".mysql_real_escape_string($request[$value["key"]."_".$lang["code"]])."'";
+						$sql=$sql.",'".parameter_filter($request[$value["key"]."_".$lang["code"]])."'";
 					}
 				}
 				$sql=$sql." )";
@@ -432,7 +429,7 @@ class XmlModel
   }
   public function Delete($dbMgr,$idlist,$sysuser){
     
-	$sql="update ".$this->XmlData["tablename"]." set status='D',updated_user=$sysuser,updated_date=now() where id in ($idlist)";
+	$sql="update ".$this->XmlData["tablename"]." set status='D',updated_user=$sysuser,updated_date=".$dbMgr->getDate()." where id in ($idlist)";
 	$query = $dbMgr->query($sql);
 	return "success";
   }
@@ -466,6 +463,44 @@ class XmlModel
 		echo $result;
 	  }
 
+ }
+
+ 
+  public function ShowAPIList($dbMgr){
+  
+    $sql=$this->GetSearchSql($request);
+	$query = $dbMgr->query($sql);
+	$result = $dbMgr->fetch_array_all($query); 
+
+	outputXml($result);
+  }
+  public function DetailApi($dbMgr,$id,$lang){
+	if($this->XmlData["ismutillang"]=="1"){
+		$sql="select * from ".$this->XmlData["tablename"]." m
+		inner join ".$this->XmlData["tablename"]."_lang ml on m.id=ml.oid and code='$lang' where id=$id";
+		$query = $dbMgr->query($sql);
+		$result = $dbMgr->fetch_array_all($query);
+	}else{
+		$sql="select * from ".$this->XmlData["tablename"]." where id=$id";
+		$query = $dbMgr->query($sql);
+		$result = $dbMgr->fetch_array_all($query);
+	} 
+
+	outputXml($result);
+  }
+	  
+  public function DefaultShowAPI($dbmgr,$action,$request){
+	  if($action==""){
+		$this->ShowAPIList($dbmgr);
+	  }if($action=="detail"){
+		$this->DetailApi($dbmgr,$request["id"],$request["lang"]);
+	  }else if($action=="save"){
+		$result=$this->Save($dbmgr,$request,-1);
+		echo $result;
+	  }else if($action=="delete"){
+		$result=$this->Delete($dbmgr,$request["idlist"],-1);
+		echo $result;
+	  }
   }
 
 }

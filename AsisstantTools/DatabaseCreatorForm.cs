@@ -34,7 +34,7 @@ namespace AsisstantTools
             matchValueType.Add("select", "varchar(10)");
             matchValueType.Add("text", "nvarchar(100)");
             matchValueType.Add("longtext", "nvarchar(500)");
-            matchValueType.Add("datetime", "datetime");
+            matchValueType.Add("datetime", "varchar(30)");
             matchValueType.Add("html", "text");
             matchValueType.Add("upload", "nvarchar(255)");
             matchValueType.Add("flist", "nvarchar(500)");
@@ -42,6 +42,7 @@ namespace AsisstantTools
             matchValueType.Add("check", "varchar(1)");
             matchValueType.Add("fkey", "int");
             matchValueType.Add("grid", "");
+            matchValueType.Add("password", "nvarchar(100)");
 
         }
 
