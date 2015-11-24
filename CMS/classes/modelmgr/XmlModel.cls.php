@@ -334,6 +334,9 @@ class XmlModel
 			if($value["type"]=="grid"){
 				continue;
 			}
+			if($value["nosave"]=="1"){
+				continue;
+			}
 			$sql=$sql.",`".$value["key"]."`";
 		}
 		$sql=$sql.",created_date,created_user,updated_date,updated_user ) values (";
@@ -343,6 +346,9 @@ class XmlModel
 			
 			if($value["type"]=="grid"
 			||$value["ismutillang"]){
+				continue;
+			}
+			if($value["nosave"]=="1"){
 				continue;
 			}
 
@@ -367,6 +373,9 @@ class XmlModel
 			}
 			if($value["type"]=="grid"
 			||$value["type"]=="password"){
+				continue;
+			}
+			if($value["nosave"]=="1"){
 				continue;
 			}
 			$sql=$sql.", `".$value["key"]."`='".mysql_real_escape_string($request[$value["key"]])."'";
