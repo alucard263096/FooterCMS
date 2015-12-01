@@ -210,14 +210,43 @@ class XmlModel
 	$sql=$this->GetSearchSql($request);
 	$query = $dbMgr->query($sql);
 	$result = $dbMgr->fetch_array_all($query);
+	$result=$this->ClearData($result);
 
-	$result=ClearData($result);
+	$result=$this->ReloadFListData($dbMgr,$result);
 
     $smartyMgr->assign("ModelData",$this->XmlData);
     $smartyMgr->assign("PageName",$this->PageName);
     $smartyMgr->assign("result",$result);
     $smartyMgr->display(ROOT.'/templates/model/result.html');
 
+  }
+
+  public function ReloadFListData($dbMgr,$result){
+	$fields=$this->XmlData["fields"]["field"];
+	foreach ($fields as $value){
+		if($value["type"]=="flist"){
+			$rtable=$value["relatetable"];
+			if($rtable!=""){
+				for($i=0;$i<count($result);$i++){
+					$sql="select pid,fid from $rtable where pid=".$result[$i]["id"];
+					$query = $dbMgr->query($sql);
+					$rs = $dbMgr->fetch_array_all($query);
+
+					$isfirst=1;
+					$str="";
+					foreach($rs as $v){
+						if($isfirst==0){
+							$str.=",";
+						}
+						$isfirst=0;
+						$str.=$v["fid"];
+					}
+					$result[$i][$value["key"]]=$str;
+				}
+			}
+		}
+	}
+	return $result;
   }
 
   public function ClearData($result){
@@ -238,7 +267,9 @@ class XmlModel
 
 	$query = $dbMgr->query($sql);
 	$result = $dbMgr->fetch_array_all($query); 
-	$result=ClearData($result);
+	$result=$this->ClearData($result);
+
+	$result=$this->ReloadFListData($dbMgr,$result);
 	
 	$this->GetFListData($dbMgr,$smartyMgr);
     $smartyMgr->assign("ModelData",$this->XmlData);
@@ -268,7 +299,12 @@ class XmlModel
 
 	$sql="select * from ".$this->XmlData["tablename"]." where id=$id";
 	$query = $dbMgr->query($sql);
-	$result = $dbMgr->fetch_array($query); 
+	$result = $dbMgr->fetch_array_all($query); 
+
+	$result=$this->ClearData($result);
+	$result=$this->ReloadFListData($dbMgr,$result);
+
+	$result=$result[0];
 
 	if($this->XmlData["ismutillang"]=="1"){
 	$sql="select * from ".$this->XmlData["tablename"]."_lang where oid=$id";
@@ -331,6 +367,9 @@ class XmlModel
 			if($value["type"]=="grid"){
 				continue;
 			}
+			if($value["type"]=="flist"&&$value["relatetable"]!=""){
+				continue;
+			}
 			if($value["nosave"]=="1"){
 				continue;
 			}
@@ -343,6 +382,9 @@ class XmlModel
 			
 			if($value["type"]=="grid"
 			||$value["ismutillang"]){
+				continue;
+			}
+			if($value["type"]=="flist"&&$value["relatetable"]!=""){
 				continue;
 			}
 			if($value["nosave"]=="1"){
@@ -372,10 +414,13 @@ class XmlModel
 			||$value["type"]=="password"){
 				continue;
 			}
+			if($value["type"]=="flist"&&$value["relatetable"]!=""){
+				continue;
+			}
 			if($value["nosave"]=="1"){
 				continue;
 			}
-			$sql=$sql.", ".$value["key"]."='".mysql_real_escape_string($request[$value["key"]])."'";
+			$sql=$sql.", ".$value["key"]."='".parameter_filter($request[$value["key"]])."'";
 		}
 		$sql=$sql." where id=$id";
 		$query = $dbMgr->query($sql);
@@ -386,6 +431,24 @@ class XmlModel
 				$sql=$sql." ".$value["key"]."='".md5($request[$value["key"]])."'";
 				$sql=$sql." where id=$id and ".$value["key"]."<>'".parameter_filter($request[$value["key"]])."'";
 				$query = $dbMgr->query($sql);
+			}
+			if($value["type"]=="flist"&&$value["relatetable"]!=""){
+				$relatetable=$value["relatetable"];
+				$sql="delete from $relatetable where pid=$id";
+				$query = $dbMgr->query($sql);
+				$arr=explode(",",$request[$value["key"]]);
+				if(count($arr)>0){
+					$sql="insert into $relatetable (pid,fid) values";
+					$isfirst=1;
+					foreach($arr as $v){
+						if($isfirst==0){
+							$sql.=",";
+						}
+						$isfirst=0;
+						$sql.=" ($id,$v)";
+					}
+					$query = $dbMgr->query($sql);
+				}
 			}
 		}
 		if($haveMutilLang){
@@ -427,6 +490,7 @@ class XmlModel
 	$dbMgr->commit_trans();
 	return "right".$id;
   }
+
   public function Delete($dbMgr,$idlist,$sysuser){
     
 	$sql="update ".$this->XmlData["tablename"]." set status='D',updated_user=$sysuser,updated_date=".$dbMgr->getDate()." where id in ($idlist)";
@@ -484,7 +548,7 @@ class XmlModel
 		$sql="select * from ".$this->XmlData["tablename"]." where id=$id";
 		$query = $dbMgr->query($sql);
 		$result = $dbMgr->fetch_array_all($query);
-	} 
+	}
 
 	outputXml($result);
   }
