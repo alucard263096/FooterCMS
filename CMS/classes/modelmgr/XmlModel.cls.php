@@ -86,7 +86,11 @@ class XmlModel
 	$fields=$this->XmlData["fields"]["field"];
 	foreach ($fields as $value){
 		if($value["displayinlist"]=="1"){
-			if($value["type"]=="select"){
+			if($value["type"]=="flist"&&$value["relatetable"]!=""){
+				$table=$value["relatetable"];
+				
+				$sql=$sql." ,'' ".$value["key"];
+			}else if($value["type"]=="select"){
 
 				$sql=$sql." ,case   r_main.".$value["key"]." ";
 				foreach ($value["options"]["option"] as $option){
