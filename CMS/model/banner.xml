@@ -4,6 +4,7 @@
   <tablename>tb_website_banner</tablename>
   <nolist>0</nolist>
   <searchcondition>r_main.status&lt;&gt;'D'</searchcondition>
+  <import>Y</import>
   <fields>
     <field>
       <name>序号</name>

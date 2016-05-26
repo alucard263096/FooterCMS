@@ -21,6 +21,10 @@ class XmlModel
   {
      return json_decode(json_encode((array) simplexml_load_string($xml)), true);
   }
+
+  public function getModelData(){
+	return $this->XmlData;
+  }
   
   private function loadXmlFile($name){
     $path=ROOT."/model/$name.xml";
