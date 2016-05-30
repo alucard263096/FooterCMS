@@ -14,6 +14,7 @@ class XmlModel
 	  if($CONFIG["SupportMultiLanguage"]==true){
 		$this->XmlData=ResetNameWithLang($this->XmlData,$SysLangCode);
 	  }
+	  $this->XmlData["model"]=$name;
 	  $this->PageName=$pagename;
   }
 
@@ -499,6 +500,10 @@ class XmlModel
 	return "right".$id;
   }
 
+  public function Import($dbMgr,$request,$sysuser){
+	print_r($request);
+  }
+
   public function Delete($dbMgr,$idlist,$sysuser){
     
 	$sql="update ".$this->XmlData["tablename"]." set status='D',updated_user=$sysuser,updated_date=".$dbMgr->getDate()." where id in ($idlist)";
@@ -532,6 +537,9 @@ class XmlModel
 		echo $result;
 	  }else if($action=="delete"){
 		$result=$this->Delete($dbmgr,$request["idlist"],$SysUser["id"]);
+		echo $result;
+	  }else if($action=="import"){
+		$result=$this->Import($dbmgr,$request,$SysUser["id"]);
 		echo $result;
 	  }
 

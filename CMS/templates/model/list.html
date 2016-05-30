@@ -13,8 +13,9 @@
                                     <button class="btn btn-info">导入</button>
                                     <button data-toggle="dropdown" class="btn btn-info dropdown-toggle"><span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{{$rootpath}}/template.php?model=banner" target="_blank">下载模板</a></li>
-                                        <li><a href="#">导入数据</a></li>
+                                        <li><a href="{{$rootpath}}/template.php?model={{$ModelData.model}}" target="_blank">下载模板</a></li>
+                                        <li><a href="#" onclick="$('#file_import').click();">导入数据</a></li>
+                                        <input class="hide" name="file_import" id="file_import" onchange="importData('import', '{{$ModelData.model}}_import')" type="file" />
                                     </ul>
                                 </div>
                                 {{/if}}
@@ -259,6 +260,23 @@
     }
 
      
+    function importData(key,module) {
+        $.ajaxFileUpload
+		(
+			{
+			    "url": '{{$PageName}}?action=import&module=' + module+"&field=file_" + key,
+			    "secureuri": false,
+			    "fileElementId": "file_" + key,
+			    "dataType": 'text',
+			    "success": function (data, status) {
+			        alert(data);
+			    },
+			    "error": function (data, status, e) {
+			        errorDialog("{{$SysLang.model.uploaderror}}");
+			    }
+			}
+		);
+    }
 
    
 

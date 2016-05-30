@@ -22,24 +22,83 @@ class ExcelMgr
 	}
 
 	public function setHeaderForModel($header){
-		for($i=0;$i<count($header);$i++){
+
+		$objPHPExcel=$this->objPHPExcel;
+		$this->objPHPExcel->setActiveSheetIndex(0);
+
+		$i=0;
+		foreach($header as $val){
+
+			if($val["type"]=="grid"){
+				continue;
+			}
+
 			$objRichText = new PHPExcel_RichText();
-			$objRichText->createText($header[$i]["name"]);
-			$objPayable = $objRichText->createTextRun($header[$i]["name"]);
+			//$objRichText->createText($header[$i]["name"]);
+			$objPayable = $objRichText->createTextRun($val["name"]);
 			$objPayable->getFont()->setBold(true);
-			$objPayable->getFont()->setItalic(true);
+			//$objPayable->getFont()->setItalic(true);
 			$objPayable->getFont()->setColor( new PHPExcel_Style_Color( PHPExcel_Style_Color::COLOR_WHITE ) );
-			$this->objPHPExcel->setActiveSheetIndex(0)->setCellValue($this->getCol($i)."1",$objRichText);
+			
+			$this->objPHPExcel->getActiveSheet()->setCellValue($this->getCol($i)."1",  $objRichText);
+
+			$this->objPHPExcel->getActiveSheet()->getStyle($this->getCol($i)."1")
+			->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+			->getStartColor()->setRGB(new PHPExcel_Style_Color( PHPExcel_Style_Color::COLOR_DARKBLUE ) );
+			$this->objPHPExcel->getActiveSheet()->getColumnDimension($this->getCol($i))->setWidth(15);
+
+			$format=PHPExcel_Style_NumberFormat::FORMAT_GENERAL;
+			if($val["type"]=="number"){
+				$format=PHPExcel_Style_NumberFormat::FORMAT_NUMBER_00;
+				$objPHPExcel->getActiveSheet()->getStyle($this->getCol($i).'2:'.$this->getCol($i)."1000")->getNumberFormat()
+				->setFormatCode($format);
+			}else if($val["type"]=="datetime"){
+				$format=PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2;				
+				$objPHPExcel->getActiveSheet()->getStyle($this->getCol($i).'2:'.$this->getCol($i)."1000")->getNumberFormat()
+				->setFormatCode($format);
+			}else if($val["type"]=="check"){
+				for($k=2;$k<=1000;$k++){
+					$objValidation = $objPHPExcel->getActiveSheet()->getCell($this->getCol($i)."$k")->getDataValidation();
+					$objValidation -> setType(PHPExcel_Cell_DataValidation::TYPE_LIST)  
+				   -> setErrorStyle(PHPExcel_Cell_DataValidation::STYLE_INFORMATION)  
+				   -> setAllowBlank(false)  
+				   -> setShowInputMessage(true)  
+				   -> setShowErrorMessage(true)  
+				   -> setShowDropDown(true)  
+				   -> setErrorTitle('输入的值有误')  
+				   -> setError('您输入的值不在下拉框列表内.')
+				   -> setFormula1('"是,否"'); 
+				}
+			}else if($val["type"]=="select"){
+				
+				$select="";
+				$f=true;
+				foreach($val["options"]["option"] as $option){
+					
+					if(!$f){
+						$select=$select.",";
+					}
+					$f=false;
+					$select=$select.$option["name"];
+				}
+				
+				for($k=2;$k<=1000;$k++){
+					$objValidation = $objPHPExcel->getActiveSheet()->getCell($this->getCol($i)."$k")->getDataValidation();
+					$objValidation -> setType(PHPExcel_Cell_DataValidation::TYPE_LIST)  
+				   -> setErrorStyle(PHPExcel_Cell_DataValidation::STYLE_INFORMATION)
+				   -> setAllowBlank(false)  
+				   -> setShowInputMessage(true)  
+				   -> setShowErrorMessage(true)  
+				   -> setShowDropDown(true)  
+				   -> setErrorTitle('输入的值有误')  
+				   -> setError('您输入的值不在下拉框列表内.')
+				   -> setFormula1('"'.$select.'"'); 
+				}
+			}
+			
+			$i++;
 		}
-		//$startrow=2;
-		//if($header==null){
-		//	$startrow=1;
-		//}
-		//for($i=0;$i<count($array);$i++){
-		//	for($j=0;$j<count($array[$i]);$j++){
-		//		$this->objPHPExcel->setActiveSheetIndex(0)->setCellValue($this->getCol($i).($startrow+$j), $array[$i][$j]);
-		//	}
-		//}
+		
 		$this->objPHPExcel->getActiveSheet()->setTitle('sheet 1');
 	}
 
