@@ -16,8 +16,8 @@
 </div>
 
 
-<div id="dialog_box" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog_boxtitle" aria-hidden="true">
-    <div class="modal-dialog">
+<div id="dialog_box" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog_boxtitle" aria-hidden="true" >
+    <div class="modal-dialog" >
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -114,6 +114,7 @@
         showDialog(msg);
     }
     function showDialog(msg) {
+        $("#dialog_box .modal-dialog").css("width","");
         $("#dialog_boxBtnConfirm").hide();
         $("#dialog_boxmsg").html(msg);
         $("#dialog_box").modal('show');
@@ -121,6 +122,7 @@
 
     function displayMutilLangPop(name, key) {
         $("#dialog_boxtitle").text(name);
+        $("#dialog_box .modal-dialog").css("width","");
         str = "<div class='row form-horizontal'>";
         {{foreach from=$SysLangConfig.langs.lang item=rslang}}
         str=str+"<div class='form-group col-md-12'>";
@@ -156,17 +158,35 @@
     function confirmDialog(title, msg, confirmFunction) {
 
         $("#dialog_boxtitle").text(title);
+        $("#dialog_box .modal-dialog").css("width","");
         $("#dialog_boxmsg").html(msg);
         $("#dialog_boxBtnConfirm").unbind("click").click(function () {
 
-            $("#dialog_box").modal('hide');
-            confirmFunction();
+            var v=confirmFunction();
+            if(v==undefined){
+                $("#dialog_box").modal('hide');
+            }
         });
         $("#dialog_boxBtnConfirm").show();
-        $("#dialog_box").modal("show");
+        $("#dialog_box").modal("show").css({width:'auto'});
+    }
+                
+    function confirmDialogBigWindow(title, msg, confirmFunction) {
+        
+        $("#dialog_boxtitle").text(title);
+        $("#dialog_box .modal-dialog").css("width","auto");
+        $("#dialog_boxmsg").html(msg);
+        $("#dialog_boxBtnConfirm").unbind("click").click(function () {
+
+            var v=confirmFunction();
+            if(v==undefined){
+                $("#dialog_box").modal('hide');
+            }
+        });
+        $("#dialog_boxBtnConfirm").show();
+        $("#dialog_box").modal("show").css({width:'auto'});
 
     }
-
 </script>
 
     </body>

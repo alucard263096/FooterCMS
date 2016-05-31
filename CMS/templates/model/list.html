@@ -269,7 +269,29 @@
 			    "fileElementId": "file_" + key,
 			    "dataType": 'text',
 			    "success": function (data, status) {
-			        alert(data);
+			        confirmDialogBigWindow("数据导入",data,function(){
+			            $("#importList tr").each(function () {
+			                if ($(this).find(".RowSelect").prop("checked")==true) {
+			                    var json={action:"save"
+			                    {{foreach from=$ModelData.fields.field item=rs}}
+                                {{if $rs.type!="grid"}}
+                                    ,"{{$rs.key}}":$(this).find(".kv_{{$rs.key}}").val()
+                                {{/if}}
+                                {{/foreach}}
+        };
+    var tcc=$(this);
+    $.post("{{$PageName}}",json,function(data){
+        if(data.substring(0,5)=="right"){
+            tcc.find(".checkdd").html("<i class='text-success glyphicon glyphicon-ok'></i>");
+        }else{
+            tcc.find(".checkdd").append("<i class='text-warning glyphicon glyphicon-exclamation-sign'></i>");
+        }
+    });
+			                }
+                        });
+                            
+                        return true;
+			        });
 			    },
 			    "error": function (data, status, e) {
 			        errorDialog("{{$SysLang.model.uploaderror}}");

@@ -102,6 +102,46 @@ class ExcelMgr
 		$this->objPHPExcel->getActiveSheet()->setTitle('sheet 1');
 	}
 
+	public function read($filename){
+		$objPHPExcel=$this->objPHPExcel;
+		$objPHPExcel = PHPExcel_IOFactory::load($filename);
+
+		$head=array();
+		$ret=array();
+
+		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+			//echo 'Worksheet - ' , $worksheet->getTitle() , EOL;
+
+			foreach ($worksheet->getRowIterator() as $row) {
+				$r=array();
+				$rowIndex=$row->getRowIndex();
+				$cellIterator = $row->getCellIterator();
+				$cellIterator->setIterateOnlyExistingCells(true); // Loop all cells, even if it is not set
+				$cellindex=0;
+				$arrrow=array();
+				$rownotnull=false;
+				foreach ($cellIterator as $cell) {
+					if (!is_null($cell)) {
+						$cellval=$cell->getCalculatedValue();
+						if($cellval!=""){
+							if($rowIndex==1){
+								$head[$cellindex]=$cellval;
+							}else{
+								$rownotnull=true;
+								$arrrow[$head[$cellindex]]=$cellval;
+							}
+						}
+					}
+					$cellindex++;
+				}
+				if($rownotnull){
+					$ret[]=$arrrow;
+				}
+			}
+		}
+		return $ret;
+	}
+
 	public function download($filename){
 		// Redirect output to a client’s web browser (Excel2007)
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

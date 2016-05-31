@@ -500,8 +500,64 @@ class XmlModel
 	return "right".$id;
   }
 
-  public function Import($dbMgr,$request,$sysuser){
-	print_r($request);
+  public function Import($dbMgr,$smartyMgr,$request,$sysuser){
+	$file=$_FILES["file_import"];
+	if($file["error"]!="0"){
+		return "UPLOADERROR";
+	}
+	if ($file["type"] != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+		return "FILETYPEERROR";
+	}
+	$excelMgr=new ExcelMgr();
+	$excelarr=$excelMgr->read($file["tmp_name"]);
+	
+    $smartyMgr->assign("ModelData",$this->XmlData);
+    $smartyMgr->assign("PageName",$this->PageName);
+    $smartyMgr->assign("ImportData",$this->ImportDataCheck($excelarr));
+    $smartyMgr->display(ROOT.'/templates/model/import.html');
+
+  }
+
+  public function ImportDataCheck($dataarr){
+	$fields=$this->XmlData["fields"]["field"];
+
+	$ret=array();
+	foreach($dataarr as $row){
+		$r=array();
+		foreach($fields as $fk=>$field){
+			foreach($row as $key=>$col){
+				if($key==$field["name"]){
+					$field["value"]=$col;
+					$field["display"]=$col;
+				}
+			}
+			
+			$field["error"]="0";
+			if($field["notnull"]==1&&$field["value"]==""){
+					$field["error"]="1";
+					$field["display"]="不为空";
+			}
+			if($field["type"]=="select"){
+				$options=$field["options"]["option"];
+				$opval="";
+				foreach($options as $option){
+					if($field["value"]==$option["name"]){
+						$opval=$option["value"];
+					}
+				}
+				if($opval==""){
+					$field["error"]="1";
+					$field["display"]=$field["display"]." 错误值";
+					$field["value"]=$opval;
+				}else{
+					$field["value"]=$opval;
+				}
+			}
+			$r[$field["key"]]=$field;
+		}
+		$ret[]=$r;
+	}
+	return $ret;
   }
 
   public function Delete($dbMgr,$idlist,$sysuser){
@@ -539,7 +595,7 @@ class XmlModel
 		$result=$this->Delete($dbmgr,$request["idlist"],$SysUser["id"]);
 		echo $result;
 	  }else if($action=="import"){
-		$result=$this->Import($dbmgr,$request,$SysUser["id"]);
+		$result=$this->Import($dbmgr,$smarty,$request,$SysUser["id"]);
 		echo $result;
 	  }
 

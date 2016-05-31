@@ -6,7 +6,6 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
   require 'include/common.inc.php';
- require ROOT.'/classes/mgr/excel.cls.php';
 
  $model=$_REQUEST["model"];
  if($model==""){
