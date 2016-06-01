@@ -12,14 +12,14 @@
         <tr>
             <td class="checkdd"><input type="checkbox" class="RowSelect" /></td>
             {{foreach from=$row item=col }}
-            <td class="err{{$col.error}}"  >
+            <td class="err{{$col.error}} kd_{{$col.key}}">
                 {{if $col.error==1}}
                 <span class="text-danger">{{$col.display}}</span>
                 {{else}}
                 {{$col.display}}
                 {{/if}}
-                <input type="hidden" value="{{$col.value}}" class="kv_{{$col.key}}" />
             </td>
+            <input type="hidden" value="{{$col.value}}" class="kv_{{$col.key}}" style="width:30px;" />
             {{/foreach}}
         </tr>
         {{/foreach}}

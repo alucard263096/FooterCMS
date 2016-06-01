@@ -53,6 +53,25 @@
       <uploadmodule>banner</uploadmodule>
     </field>
     <field>
+      <name>地址</name>
+      <key>address</key>
+      <type>text</type>
+      <notnull>1</notnull>
+      <displayinlist>1</displayinlist>
+    </field>
+    <field>
+      <name>Lat</name>
+      <key>lat</key>
+      <type>text</type>
+      <displayinlist>1</displayinlist>
+    </field>
+    <field>
+      <name>Lng</name>
+      <key>lng</key>
+      <type>text</type>
+      <displayinlist>1</displayinlist>
+    </field>
+    <field>
       <name>状态</name>
       <key>status</key>
       <type>select</type>
@@ -86,4 +105,12 @@
       <search>1</search>
     </option>
   </options>
+  <javascripts>
+    <javascript>
+      <filename>banner.js</filename>
+      <search>1</search>
+    </javascript>
+    <javascript>
+    </javascript>
+  </javascripts>
 </root>

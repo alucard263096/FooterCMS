@@ -42,4 +42,8 @@ var myjs_saveClick = function (json) {
 var myjs_aftersave = function (data) {
     
     return true;
-}; 
+};
+
+var myjs_afterimportdataload = function () {
+    
+};

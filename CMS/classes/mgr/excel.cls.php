@@ -116,21 +116,24 @@ class ExcelMgr
 				$r=array();
 				$rowIndex=$row->getRowIndex();
 				$cellIterator = $row->getCellIterator();
-				$cellIterator->setIterateOnlyExistingCells(true); // Loop all cells, even if it is not set
+				$cellIterator->setIterateOnlyExistingCells(false); // Loop all cells, even if it is not set
 				$cellindex=0;
 				$arrrow=array();
 				$rownotnull=false;
 				foreach ($cellIterator as $cell) {
 					if (!is_null($cell)) {
 						$cellval=$cell->getCalculatedValue();
-						if($cellval!=""){
-							if($rowIndex==1){
-								$head[$cellindex]=$cellval;
-							}else{
-								$rownotnull=true;
-								$arrrow[$head[$cellindex]]=$cellval;
-							}
+					}
+					if($cellval!=""){
+						if($rowIndex==1){
+							$head[$cellindex]=$cellval;
 						}
+					}
+					if($rowIndex>1){
+						if($cellval!=""){
+							$rownotnull=true;
+						}
+						$arrrow[$head[$cellindex]]=$cellval;
 					}
 					$cellindex++;
 				}

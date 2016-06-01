@@ -122,6 +122,23 @@
 
                 </div>
 
+<div id="import_box" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="import_boxtitle" aria-hidden="true">
+    <div class="modal-dialog" style="width:auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="import_boxtitle" class="modal-title">数据导入</h4>
+            </div>
+            <div class="modal-body">
+                <p id="import_boxmsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="import_boxBtnConfirm" class="btn btn-success">导入</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{$SysLang.common.close}}</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript" src="{{$rootpath}}/js/myjs.js"></script>
 {{foreach from=$ModelData.javascripts.javascript item=rs}}
@@ -269,29 +286,34 @@
 			    "fileElementId": "file_" + key,
 			    "dataType": 'text',
 			    "success": function (data, status) {
-			        confirmDialogBigWindow("数据导入",data,function(){
-			            $("#importList tr").each(function () {
-			                if ($(this).find(".RowSelect").prop("checked")==true) {
-			                    var json={action:"save"
+
+			        $("#import_boxmsg").html(data);
+			        myjs_afterimportdataload();
+			        $("#import_boxBtnConfirm").click(function () {
+
+                        $("#importList tr").each(function () {
+                            if ($(this).find(".RowSelect").prop("checked")==true) {
+                                var json={action:"save"
 			                    {{foreach from=$ModelData.fields.field item=rs}}
-                                {{if $rs.type!="grid"}}
+                                 {{if $rs.type!="grid"}}
                                     ,"{{$rs.key}}":$(this).find(".kv_{{$rs.key}}").val()
-                                {{/if}}
-                                {{/foreach}}
-        };
-    var tcc=$(this);
-    $.post("{{$PageName}}",json,function(data){
-        if(data.substring(0,5)=="right"){
-            tcc.find(".checkdd").html("<i class='text-success glyphicon glyphicon-ok'></i>");
-        }else{
-            tcc.find(".checkdd").append("<i class='text-warning glyphicon glyphicon-exclamation-sign'></i>");
-        }
-    });
-			                }
-                        });
-                            
-                        return true;
+                                     {{/if}}
+                                    {{/foreach}}
+                                    };
+                            var tcc=$(this);
+                            $.post("{{$PageName}}",json,function(data){
+                                if(data.substring(0,5)=="right"){
+                                    tcc.find(".checkdd").html("<i class='text-success glyphicon glyphicon-ok'></i>");
+                                }else{
+                                    tcc.find(".checkdd").append("<i class='text-warning glyphicon glyphicon-exclamation-sign'></i>");
+                                }
+                            });
+                        }
+                    });
+
 			        });
+                    
+			        $("#import_box").modal("show");
 			    },
 			    "error": function (data, status, e) {
 			        errorDialog("{{$SysLang.model.uploaderror}}");
