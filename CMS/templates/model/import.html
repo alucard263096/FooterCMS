@@ -3,7 +3,9 @@
         <tr>
             <th></th>
             {{foreach from=$ModelData.fields.field item=rs}}
+            {{if $rs.type!="grid"}}
             <th>{{$rs.name}}</th>
+            {{/if}}
             {{/foreach}}
         </tr>
     </thead>
@@ -12,6 +14,7 @@
         <tr>
             <td class="checkdd"><input type="checkbox" class="RowSelect" /></td>
             {{foreach from=$row item=col }}
+            {{if $col.type!="grid"}}
             <td class="err{{$col.error}} kd_{{$col.key}}">
                 {{if $col.error==1}}
                 <span class="text-danger">{{$col.display}}</span>
@@ -20,6 +23,7 @@
                 {{/if}}
             </td>
             <input type="hidden" value="{{$col.value}}" class="kv_{{$col.key}}" style="width:30px;" />
+            {{/if}}
             {{/foreach}}
         </tr>
         {{/foreach}}

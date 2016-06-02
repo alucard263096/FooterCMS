@@ -12,17 +12,26 @@
     {{foreach from=$result item=row}}
     <tr>
         {{foreach from=$row item=col key=key}}
-            {{if $key!="id"}}
-            {{foreach from=$ModelData.fields.field item=rs}}
-                {{if $key==$rs.key && $rs.displayinlist=="1"}}
-                    {{if $rs.gotodetail=="1"}}
-                    <td class="result_{{$rs.key}}"><a href="{{$PageName}}?action=edit&id={{$row.id}}&parenturl={{$parenturl}}">{{$col}}</a></td>
-                    {{else}}
-                    <td class="result_{{$rs.key}}">{{$col}}</td>
-                    {{/if}}
+        {{if $key!="id"}}
+        {{foreach from=$ModelData.fields.field item=rs}}
+        {{if $key==$rs.key && $rs.displayinlist=="1"}}
+        <td class="result_{{$rs.key}}">
+            {{if $rs.gotodetail=="1"}}
+            <a href="{{$PageName}}?action=edit&id={{$row.id}}">
                 {{/if}}
-            {{/foreach}}
+
+                {{if $rs.type=="upload" && $rs.filetype=="image"}}
+                <img src="{{$uploadpath}}/{{$rs.uploadmodule}}/{{$col}}" alt="ÔÝÎÞÍ¼Æ¬" style="height:50px;" />
+                {{else}}
+                {{$col}}
+                {{/if}}
+                {{if $rs.gotodetail=="1"}}
+            </a>
             {{/if}}
+        </td>
+        {{/if}}
+        {{/foreach}}
+        {{/if}}
         {{/foreach}}
     </tr>
     {{/foreach}}
@@ -34,7 +43,7 @@
     flistarr{{$rs.key}}[{{$rsvalue.id}}] = "{{$rsvalue.name}}";
     {{/foreach}}
         {{/foreach}}
-    
+
             $(function () {
                 {{foreach from=$ModelData.fields.field item=rs}}
                 {{if $rs.type=="flist"}}
@@ -56,6 +65,6 @@
                     $(this).text(nstr);
                 });
                 {{/if}}
-                {{/foreach}}
-            });
+                    {{/foreach}}
+                    });
 </script>
