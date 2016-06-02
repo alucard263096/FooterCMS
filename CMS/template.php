@@ -13,7 +13,7 @@
 	exit;
  }
  
-  $model=new XmlModel("banner","");
+  $model=new XmlModel($model,"");
   $data=$model->getModelData();
   
   //print_r($data);

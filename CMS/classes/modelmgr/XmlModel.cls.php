@@ -513,14 +513,14 @@ class XmlModel
 	
     $smartyMgr->assign("ModelData",$this->XmlData);
     $smartyMgr->assign("PageName",$this->PageName);
-    $smartyMgr->assign("ImportData",$this->ImportDataCheck($excelarr));
+    $smartyMgr->assign("ImportData",$this->ImportDataCheck($excelarr,$dbMgr));
     $smartyMgr->display(ROOT.'/templates/model/import.html');
 
   }
 
-  public function ImportDataCheck($dataarr){
+  public function ImportDataCheck($dataarr,$dbMgr){
 	$fields=$this->XmlData["fields"]["field"];
-
+	
 	$ret=array();
 	foreach($dataarr as $row){
 		$r=array();
@@ -551,6 +551,31 @@ class XmlModel
 					$field["value"]=$opval;
 				}else{
 					$field["value"]=$opval;
+				}
+			}
+			if($field["type"]=="fkey"){
+				$tablename=$field["tablename"];
+				$tname=$field["ntbname"];
+				$condition=$field["condition"];
+				if($condition==""){
+					$condition=" 1=1 ";
+				}
+				$searchfield=$field["displayfield"];
+				$sql=" select id from $tablename as $tname where $condition and name='".$field["value"]."' ";
+				
+				$query = $dbMgr->query($sql);
+				$result = $dbMgr->fetch_array($query); 
+				if(($result["id"]+0)==0){
+					if($field["notnull"]==1){
+						$field["error"]="1";
+						$field["display"]=$field["display"]." 没有值";
+						$field["value"]=0;
+					}else{
+						$field["display"]="-";
+						$field["value"]=0;
+					}
+				}else{
+					$field["value"]=$result["id"];
 				}
 			}
 			$r[$field["key"]]=$field;

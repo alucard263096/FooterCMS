@@ -4,6 +4,7 @@
   <tablename>tb_download_file</tablename>
   <nolist>0</nolist>
   <searchcondition>r_main.status&lt;&gt;'D' and r_main.category_id&gt;0</searchcondition>
+  <import>Y</import>
   <fields>
     <field>
       <name>序号</name>
